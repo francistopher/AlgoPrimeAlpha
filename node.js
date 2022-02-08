@@ -1,3 +1,8 @@
+/*
+ *	Class used to instantiate and represent a 'node' element,
+ *  which would serve as a member of an ensemble to perform
+ * 	an algorithm.
+ */
 class Node {
 	constructor(value) {
 		this.value = value - 1;
@@ -9,15 +14,8 @@ class Node {
 
 	#buildLabel() {
 		this.label = document.createElement("LABEL");
+		this.label.id = "node";
 		this.label.innerHTML = this.value + 1;
-		this.label.style.borderStyle = "solid";
-		this.label.style.borderWidth = "0.25vw";
-		this.label.style.borderColor = "black";
-		this.label.style.width = "3vw";
-		this.label.style.height = "3vw";
-		this.label.style.textAlign = "center";
-		this.label.style.position = "absolute";
-		this.label.style.borderRadius = "1.6vw";
 	}
 
 	setBackgroundColor(color) {

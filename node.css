@@ -1,0 +1,10 @@
+#node {
+	position: absolute;
+	width: 3vw;
+	height: 3vw;
+	text-align: center;
+	border-width: 0.25vw;
+	border-radius: 1.6vw;
+	border-color: black;
+	border-style: solid;
+}
