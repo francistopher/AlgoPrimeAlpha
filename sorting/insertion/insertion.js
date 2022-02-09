@@ -1,3 +1,8 @@
+/*
+ *	Class that sorts the node elements
+ *  via the insertion algorithm
+ */
+
 class Insertion extends NodeMaster {
 	constructor() {
 		super();
@@ -7,11 +12,14 @@ class Insertion extends NodeMaster {
 		});
 	}
 
+	// outer loop
 	#sort(i, j, key) {
 		if (i < 10) {
+			// clears the key node background color
 			if (key) {
 				this.stage[j + 1]["node"].setBackgroundColor("white");	
 			}
+			// colors the background color of the new key node
 			this.stage[i]["node"].setBackgroundColor("lightblue");
 			setTimeout(() => {
 				key = this.stage[i]["node"];
@@ -24,17 +32,22 @@ class Insertion extends NodeMaster {
 		}
 	}
 	
+	// inner loop
 	#innerLoop(i, j, key) {
 		if (j >= 0) {
+			// colors color of node that is being compared
 			this.stage[j]["node"].setBackgroundColor("yellow");
 			key.setBackgroundColor("yellow");
 		}
 		setTimeout(() => {
 			if (j >= 0 && this.stage[j]["node"].value > key.value) {
+				// key node color is cleared
 				key.setBackgroundColor("white");
+				// node colors are updated, indicating j will overlay j + 1 node
 				this.stage[j]["node"].setBackgroundColor("lightgreen");
 				this.stage[j + 1]["node"].setBackgroundColor("lightgreen");
 				setTimeout(() => {	
+					// node colors are cleared, overlay takes action
 					this.stage[j]["node"].setBackgroundColor("white");
 					this.stage[j + 1]["node"].setBackgroundColor("white");
 					this.stage[j + 1]["node"] = this.stage[j]["node"];
@@ -44,10 +57,12 @@ class Insertion extends NodeMaster {
 				}, 500);
 			} else {
 				setTimeout(() => {
+					// j node and key node are cleared
 					if (j >= 0) {
 						this.stage[j]["node"].setBackgroundColor("white");
 					}
 					key.setBackgroundColor("white");
+					// key is brought back to more proper position and noted
 					this.stage[j + 1]["node"].setBackgroundColor("white");
 					this.stage[j + 1]["node"] = key;
 					this.stage[j + 1]["node"].setBackgroundColor("lightblue");	

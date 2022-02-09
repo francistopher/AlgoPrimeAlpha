@@ -1,3 +1,7 @@
+/*
+ * Class that sorts the node elements
+ * via the bubble algorithm
+ */
 class Bubble extends NodeMaster {
 	constructor() {
 		super();
@@ -8,6 +12,7 @@ class Bubble extends NodeMaster {
 		});
 	}
 
+// outer loop
 #sort(i, j, temp, ticks) {
 	if (i < 10 - 1) {
 		this.#innerLoop(i, j, temp);
@@ -16,6 +21,7 @@ class Bubble extends NodeMaster {
 	}
 }
 
+// inner loop
 #innerLoop(i, j, temp) {
 	if (j < 10 - i - 1) {
 		this.#innerIf(i, j, temp);
@@ -24,11 +30,14 @@ class Bubble extends NodeMaster {
 	}
 }
 
+// inner if
 #innerIf(i, j, temp) {
+	// nodes are being compared
 	this.stage[j]["node"].setBackgroundColor("yellow");
 	this.stage[j + 1]["node"].setBackgroundColor("yellow");
 	setTimeout(() => {
 		if (this.stage[j]["node"].value > this.stage[j + 1]["node"].value) {
+			// nodes are going to be swaped
 			this.stage[j]["node"].setBackgroundColor("lightgreen");
 			this.stage[j + 1]["node"].setBackgroundColor("lightgreen");
 			temp = this.stage[j]["node"];
@@ -37,10 +46,12 @@ class Bubble extends NodeMaster {
 			this.stage[j + 1]["node"] = temp;
 			this.stage[j + 1]["node"].setPosition(this.stage[j + 1]["x"], "vw", "", "");
 		} else {
+			// nodes are not going to be swaped
 			this.stage[j]["node"].setBackgroundColor("crimson");
 			this.stage[j + 1]["node"].setBackgroundColor("crimson");	
 		}
 		setTimeout(() => {
+			// clear nodes background color
 			this.stage[j]["node"].setBackgroundColor("white");
 			this.stage[j + 1]["node"].setBackgroundColor("white");
 			this.#innerLoop(i, j + 1, temp);
