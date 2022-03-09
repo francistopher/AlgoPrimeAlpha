@@ -1,3 +1,11 @@
 # Algorithm Visualizer
 
-- gotta stop using the built in search and sort functions
+- html, css, javascript
+
+## Sorting
+
+- Selection
+- Bubble
+- Insertion
+
+## Searching
