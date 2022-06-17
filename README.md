@@ -1,11 +1,20 @@
 # Algorithm Visualizer
 
-- html, css, javascript
+- Written in a variety of programming languages
+- Version Alpha
 
-## Sorting
+## Programming Languages
 
-- Selection
-- Bubble
-- Insertion
+- [HTML CSS & JavaScript](./html_css_js)
+- [C](./c)
+- [C++](./cpp)
+- [Java](./java)
+- [Kotlin](./kotlin)
+- [Swift](./swift)
+- [Objective-C](./objective_c)
+- [Lisp](./lisp)
 
-## Searching
+## To Do
+
+- Write 10 classical sorting algorithms for each language
+- Write 10 classical searching algorithms for each language
