@@ -9,8 +9,6 @@
 - [C](./c)
 - [C++](./cpp)
 - [Java](./java)
-- [Kotlin](./kotlin)
-- [Swift](./swift)
 - [Objective-C](./objective_c)
 - [Lisp](./lisp)
 
