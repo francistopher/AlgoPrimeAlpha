@@ -1,1 +1,0 @@
-# Visual Algorithm in Java

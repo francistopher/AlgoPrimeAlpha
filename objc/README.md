@@ -1,3 +1,0 @@
-# Algorithm Visualizer
-
-objective c
