@@ -2,9 +2,9 @@
 
 - Version Alpha
 
-### To do python
+## To do python
 
-    - [ ] Present Intro Screen
-    - [ ] Create Buttons for types of Algorithms
-    - [ ] Present ^ buttons
+- [ ] Present Intro Screen
+- [ ] Create Buttons for types of Algorithms
+- [ ] Present ^ buttons
 
