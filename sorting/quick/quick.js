@@ -19,10 +19,30 @@ class Quick extends NodeMaster {
 			return;
 		}
 		var middleIndex = parseInt((rightIndex - 1) / 2)
-		console.log("let's merge sort!")
-		// i feel sleepy, have recovered, back in town
+		console.log("let's quick sort!")
+		// ucf library is going to close in 15 minutes
 	}
 
+    function swap(arr, i, j) {
+        let temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    function partition(arr, low, high) {
+        let pivot = arr[high];
+
+        let i = (low - 1);
+
+        for (let j = low; j <= high - 1; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i + 1, high);
+        return (i + 1);
+    }
 
 
 }
