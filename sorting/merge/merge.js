@@ -11,7 +11,7 @@ class Merge extends NodeMaster {
             this.sortButton.style.display = "none"
             console.log(this.stage);
             this.#mergeSort(0, this.stage.length - 1, this.stage.length)
-            //console.log(this.stage);
+            console.log(this.stage);
         })
     }
 
@@ -22,7 +22,6 @@ class Merge extends NodeMaster {
         }
         var middleIndex = parseInt((rightIndex - 1) / 2)
         console.log("let's merge sort!")
-        // i feel sleepy, have recovered, back in town
     }
 
     #merge(leftIndex, midIndex, rightIndex) {
@@ -37,7 +36,7 @@ class Merge extends NodeMaster {
             rightArr[j] = this.stage[midIndex + 1 + j];
         var i = 0, j = 0, k = leftIndex;
         while (i < leftMax && j < rightMax) {
-            if (leftArr[i]["node"].value <= rightArr[j]["node"].value) {
+            if (leftArr[i]["node"]["value"] <= rightArr[j]["node"]["value"]) {
                 this.stage[k++] = leftArr[i++];
             }
             else {
@@ -48,6 +47,7 @@ class Merge extends NodeMaster {
             this.stage[k++] = leftArr[i++];
         while (j < rightMax)
             this.stage[k++] = rightArr[j++];
+
     }
 
     #mergeSort(l, r, ticks) {
