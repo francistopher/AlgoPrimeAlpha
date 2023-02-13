@@ -2,9 +2,7 @@
 
 - Version Alpha
 
-## To do python
+# To do
 
-- [ ] Present Intro Screen
-- [ ] Create Buttons for types of Algorithms
-- [ ] Present ^ buttons
-
+- Add basic animations to merge
+- Start quick sort
