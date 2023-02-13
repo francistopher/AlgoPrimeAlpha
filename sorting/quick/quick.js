@@ -6,12 +6,12 @@
 class Quick extends NodeMaster {
     constructor() {
         super();
-        this.sortButton.style.display = "none";
-        var nums = [76, 2, 6, 7, 4, 9, 10, 11, 13, 91];
-
-        console.log(nums);
-        this.#sort(nums, 0, nums.length - 1);
-        console.log(nums);
+        this.sortButton.addEventListener("click", ()=> {
+            this.sortButton.style.display = "none";
+            console.log(this.stage);
+            this.#sort(0, this.stage.length - 1);
+            console.log(this.stage);
+        });
     }
 
     #swap(arr, i, j) {
@@ -21,12 +21,13 @@ class Quick extends NodeMaster {
     }
 
     #partition(arr, leftIndex, rightIndex) {
-        let pivot = arr[rightIndex];
+        // node at the rightmost index is the pivot
+        let pivot = this.stage[rightIndex]["node"];
         let i = leftIndex - 1;
         for (let j = leftIndex; j <= rightIndex - 1; j++) {
-            if (arr[j] < pivot) {
+            if (this.stage[j]["node"].value < pivot.value) {
                 i++;
-                this.#swap(arr, i, j);
+                this.#swap(this.stage, i, j);
             }
         }
         this.#swap(arr, i + 1, rightIndex);
