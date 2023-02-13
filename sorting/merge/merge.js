@@ -7,9 +7,7 @@ class Merge extends NodeMaster {
         super();
         this.sortButton.addEventListener("click", () => {
             this.sortButton.style.display = "none";
-            console.log(this.stage);
             this.#mergeSort(0, this.stage.length - 1, this.stage.length * 2000);
-            console.log(this.stage);
             setTimeout(()=> {
               this.shuffleButton.style.display = "inline";
             }, (this.stage.length - 1) * 2000);

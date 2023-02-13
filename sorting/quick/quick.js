@@ -1,48 +1,43 @@
 /*
- *	Class that implements the merge 
+ *	Class that implements the quick
  * 	sort algorithm to sort the nodes
  */
 
 class Quick extends NodeMaster {
-	
-	constructor() {
-		super()
-		this.sortButton.addEventListener("click", () => {
-			this.sortButton.style.display = "none"
-			this.#sort(0, this.stage.length - 1)
-		})
-	}
+    constructor() {
+        super();
+        this.sortButton.style.display = "none";
+        var nums = [76, 2, 6, 7, 4, 9, 10, 11, 13, 91];
 
-	// outer loop
-	#sort(leftIndex, rightIndex) {
-		if (leftIndex >= rightIndex) {
-			return;
-		}
-		var middleIndex = parseInt((rightIndex - 1) / 2)
-		console.log("let's quick sort!")
-		// ucf library is going to close in 15 minutes
-	}
+        console.log(nums);
+        this.#sort(nums, 0, nums.length - 1);
+        console.log(nums);
+    }
 
-    function swap(arr, i, j) {
+    #swap(arr, i, j) {
         let temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
 
-    function partition(arr, low, high) {
-        let pivot = arr[high];
-
-        let i = (low - 1);
-
-        for (let j = low; j <= high - 1; j++) {
+    #partition(arr, leftIndex, rightIndex) {
+        let pivot = arr[rightIndex];
+        let i = leftIndex - 1;
+        for (let j = leftIndex; j <= rightIndex - 1; j++) {
             if (arr[j] < pivot) {
                 i++;
-                swap(arr, i, j);
+                this.#swap(arr, i, j);
             }
         }
-        swap(arr, i + 1, high);
-        return (i + 1);
+        this.#swap(arr, i + 1, rightIndex);
+        return i + 1;
     }
 
-
+    #sort(arr, leftIndex, rightIndex) {
+        if (leftIndex < rightIndex) {
+            let parti = this.#partition(arr, leftIndex, rightIndex);
+            this.#sort(arr, leftIndex, parti - 1);
+            this.#sort(arr, parti + 1, rightIndex);
+        }
+    }
 }
