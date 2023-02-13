@@ -12,7 +12,7 @@ class Merge extends NodeMaster {
             console.log(this.stage);
             setTimeout(()=> {
               this.shuffleButton.style.display = "inline";
-            }, (this.stage.length - 1 * 2000));
+            }, (this.stage.length - 1) * 2000);
         });
     }
 
