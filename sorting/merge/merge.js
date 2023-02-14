@@ -106,7 +106,6 @@ class Merge extends NodeMaster {
             var m = l + parseInt((r - l) / 2);
             this.#mergeSort(l, m, ticks / 2);
             this.#mergeSort(m + 1, r, ticks / 2);
-
             setTimeout(() => {
                 this.#merge(l, m, r, ticks / 2);
             }, ticks / 2);
