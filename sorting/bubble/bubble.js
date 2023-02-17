@@ -14,16 +14,17 @@ class Bubble extends NodeMaster {
 
 // outer loop
 #sort(i, j, temp, ticks) {
-	if (i < 10 - 1) {
+	if (i < this.stage.length - 1) {
 		this.#innerLoop(i, j, temp);
 	} else {
-		this.shuffleButton.style.display = "block";
+		this.shuffleButton.style.display = "inline";
+		this.nodeCountSlider.style.display = "inline";
 	}
 }
 
 // inner loop
 #innerLoop(i, j, temp) {
-	if (j < 10 - i - 1) {
+	if (j < this.stage.length - i - 1) {
 		this.#innerIf(i, j, temp);
 	} else {
 		this.#sort(i + 1, 0, temp);

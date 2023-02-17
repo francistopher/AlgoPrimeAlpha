@@ -22,6 +22,7 @@ class Merge extends NodeMaster {
             this.sortButton.style.display = "none";
             this.#mergeSort(0, this.stage.length - 1, 0, this.stage.length * 2750);
             setTimeout(()=> {
+            this.nodeCountSlider.style.display = "inline";
               this.shuffleButton.style.display = "inline";
             }, (this.stage.length - 1) * 2750);
         });

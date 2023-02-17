@@ -18,7 +18,8 @@ class Selection extends NodeMaster {
 			min = i;
 			this.#innerLoop(i, i + 1, min);
 		} else {
-			this.shuffleButton.style.display = "block";
+			this.shuffleButton.style.display = "inline";
+			this.nodeCountSlider.style.display = "inline";
 		}
 	}
 	

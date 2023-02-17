@@ -24,6 +24,7 @@ class Quick extends NodeMaster {
             if (isSorted)
             {
                 this.shuffleButton.style.display = "inline"; 
+                this.nodeCountSlider.style.display = "inline";
             }
             else
             {

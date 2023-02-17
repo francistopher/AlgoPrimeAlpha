@@ -23,6 +23,11 @@ class Node
 		this.label.innerHTML = this.value + 1;
 	}
 
+	remove()
+	{
+		this.label.remove();
+	}
+
 	setBackgroundColor(color) 
 	{
 		this.label.style.backgroundColor = color;

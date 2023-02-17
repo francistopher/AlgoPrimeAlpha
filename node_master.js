@@ -4,11 +4,14 @@
 class NodeMaster {
 	constructor() {
 		this.stage = [];
+		this.nodeCount = 10;
 		this.shuffleButton;
 		this.sortButton;
+		this.nodeCountSlider;
 		this.#buildNodes();
 		this.#buildShuffleButton();
 		this.#buildSortButton();
+		this.#buildNodeCountSlider();
 	}
 	
 	// builds the sort button
@@ -29,8 +32,8 @@ class NodeMaster {
 
 	// shuffles the node elements in the stage array and shuffles their x positions
 	#shuffleElements() {
-		for (var i = 0, iRandom, tempNode; i < 10; i++) {
-			iRandom = Math.floor(Math.random() * 10);
+		for (var i = 0, iRandom, tempNode; i < this.nodeCount; i++) {
+			iRandom = Math.floor(Math.random() * this.nodeCount);
 			tempNode = this.stage[iRandom]["node"];
 			this.stage[iRandom]["node"] = this.stage[i]["node"];
 			this.stage[iRandom]["node"].setPosition(this.stage[iRandom]["x"], "vw", "", "");
@@ -38,14 +41,16 @@ class NodeMaster {
 			this.stage[i]["node"].setPosition(this.stage[i]["x"], "vw", "", "");
 		}
 		this.shuffleButton.style.display = "none";
+		this.nodeCountSlider.style.display = "none";
 		this.sortButton.style.display = "block";
 	}
 
 	// loads node elements onto the stage array
 	#buildNodes() {
 		// sp stands for starting position, representing the starting x position
-		for (var i = 0, sp = (100 - (3 * 10)) / 11.0, x = sp, y = "calc((100vh - 3vw) * 0.5)"; i < 10; i++) {
-			const node = new Node(i + 1);
+		const sp = (100 - (3 * this.nodeCount)) / (this.nodeCount + 1);
+		for (var i = 0, x = sp, y = "calc((100vh - 3vw) * 0.5)"; i < this.nodeCount; i++) {
+			var node = new Node(i + 1);
 			this.stage.push({
 				"x":x, 
 				"node":node
@@ -53,5 +58,38 @@ class NodeMaster {
 			node.setPosition(x, "vw", y, "");
 			x += sp + 3; // adding 3 due to the width of the element
 		}
+	}
+
+	#cleanStage()
+	{
+		for (var i = 0; i < this.stage.length; i++)
+		{
+			this.stage[i]["node"].remove();
+		}
+		this.stage.length = 0;
+		console.log(this.stage.length)
+
+	}
+
+	#updateNodeCount(newNodeCount)
+	{
+		this.nodeCount = parseInt(newNodeCount);
+		this.#cleanStage();
+		this.#buildNodes();
+
+	}
+
+	#buildNodeCountSlider()
+	{
+		this.nodeCountSlider = document.createElement("input");
+		this.nodeCountSlider.type = "range";
+		this.nodeCountSlider.value = this.nodeCount + "";
+		this.nodeCountSlider.min = "5";
+		this.nodeCountSlider.max = "20";
+		this.nodeCountSlider.style.accentColor = "black";
+		this.nodeCountSlider.addEventListener("input", ()=>{
+			this.#updateNodeCount(this.nodeCountSlider.value);
+		})
+		document.body.appendChild(this.nodeCountSlider);
 	}
 }

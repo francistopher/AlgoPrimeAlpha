@@ -28,7 +28,8 @@ class Insertion extends NodeMaster {
 			}, 1000);
 		} else {
 			key.setBackgroundColor("white");
-			this.shuffleButton.style.display = "block";
+			this.nodeCountSlider.style.display = "inline";
+			this.shuffleButton.style.display = "inline";
 		}
 	}
 	
