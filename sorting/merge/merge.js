@@ -3,18 +3,31 @@
  * 	sort algorithm to sort the nodes
  */
 class Merge extends NodeMaster {
+
+    #shuffleColors()
+    {
+        for (let i = this.colors.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const temp = this.colors[i];
+          this.colors[i] = this.colors[j];
+          this.colors[j] = temp;
+        }
+      }
+
     constructor() {
         super();
+        this.colors = ["lightgreen", "yellow", "orange", "red", "mediumpurple", "lightblue", "cyan", "lightpink"]
         this.sortButton.addEventListener("click", () => {
+            this.#shuffleColors();
             this.sortButton.style.display = "none";
-            this.#mergeSort(0, this.stage.length - 1, this.stage.length * 2000);
+            this.#mergeSort(0, this.stage.length - 1, 0, this.stage.length * 2750);
             setTimeout(()=> {
               this.shuffleButton.style.display = "inline";
-            }, (this.stage.length - 1) * 2000);
+            }, (this.stage.length - 1) * 2750);
         });
     }
 
-    #merge(leftIndex, midIndex, rightIndex, ticks) {
+    #merge(leftIndex, midIndex, rightIndex, colorIndex, ticks) {
         var leftMax = midIndex - leftIndex + 1;
         var rightMax = rightIndex - midIndex;
         var leftArr = new Array(leftMax);
@@ -22,12 +35,12 @@ class Merge extends NodeMaster {
         // load left arr with first half of nodes,x
         for (var i = 0; i < leftMax; i++) {
             leftArr[i] = this.stage[leftIndex + i]["node"];
-            this.stage[leftIndex + i]["node"].setBackgroundColor("yellow");
+            this.stage[leftIndex + i]["node"].setBackgroundColor(this.colors[colorIndex]);
         }
         // load right arr with last half of nodes,x
         for (var j = 0; j < rightMax; j++) {
             rightArr[j] = this.stage[midIndex + 1 + j]["node"];
-            this.stage[midIndex + 1 + j]["node"].setBackgroundColor("orange");
+            this.stage[midIndex + 1 + j]["node"].setBackgroundColor(this.colors[colorIndex]);
         }
         var i = 0,
             j = 0,
@@ -79,12 +92,12 @@ class Merge extends NodeMaster {
                 k++;
             }
             for (i = 0; i < leftMax; i++) {
-                this.stage[leftIndex + i]["node"].setBackgroundColor("yellow");
+                this.stage[leftIndex + i]["node"].setBackgroundColor(this.colors[colorIndex]);
             }
             // load right arr with last half of nodes,x
             for (j = 0; j < rightMax; j++) {
                 this.stage[midIndex + 1 + j]["node"].setBackgroundColor(
-                    "orange"
+                    this.colors[colorIndex]
                 );
             }
         }, ticks / 3);
@@ -101,13 +114,13 @@ class Merge extends NodeMaster {
         }, (ticks * 2) / 3);
     }
 
-    #mergeSort(l, r, ticks) {
+    #mergeSort(l, r, colorIndex, ticks) {
         if (l < r) {
             var m = l + parseInt((r - l) / 2);
-            this.#mergeSort(l, m, ticks / 2);
-            this.#mergeSort(m + 1, r, ticks / 2);
+            this.#mergeSort(l, m, Math.floor(colorIndex / 2), ticks / 2);
+            this.#mergeSort(m + 1, r, (Math.floor(this.colors.length / 2) + colorIndex), ticks / 2);
             setTimeout(() => {
-                this.#merge(l, m, r, ticks / 2);
+                this.#merge(l, m, r, (colorIndex + 1) % this.colors.length, ticks / 2);
             }, ticks / 2);
         }
        

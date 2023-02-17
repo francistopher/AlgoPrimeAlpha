@@ -4,18 +4,23 @@
 
 # To do
 
+## 0.1
+
+- provide more detailed merge sort animation
+- provide more detailed quick sort animation
+- Start binary search
+- Start linear search
+
 ## 0.2
 
 - let user select number of nodes
 
 ## 0.3
 
-- Start binary search
-- Start linear search
+- update node_master.js
 
 ## 0.4
 
-- update behind the scenes architecture
 - displacement animations
 
 ## 0.5
@@ -25,4 +30,6 @@
 ## 0.6
 - increase the detail of animations
 
+## 1.0
 
+- test users by 

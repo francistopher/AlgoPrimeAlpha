@@ -3,8 +3,11 @@
  *  which would serve as a member of an ensemble to perform
  * 	an algorithm.
  */
-class Node {
-	constructor(value) {
+class Node 
+{
+
+	constructor(value) 
+	{
 		this.value = value - 1;
 		this.label;
 		this.x;
@@ -13,15 +16,21 @@ class Node {
 	}
 
 	// creates label element with id and inner html value
-	#buildLabel() {
+	#buildLabel() 
+	{
 		this.label = document.createElement("LABEL");
 		this.label.id = "node";
 		this.label.innerHTML = this.value + 1;
 	}
 
-	// set the background color of the label
-	setBackgroundColor(color) {
+	setBackgroundColor(color) 
+	{
 		this.label.style.backgroundColor = color;
+	}
+
+	setBorderColor(color)
+	{
+		this.label.style.borderColor = color;
 	}
 	
 	/*

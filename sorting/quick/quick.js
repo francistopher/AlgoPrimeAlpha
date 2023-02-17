@@ -73,7 +73,6 @@ class Quick extends NodeMaster {
             }
             pivot.setBackgroundColor('white');
             this.#swap(i + 1, rightIndex);
-            var sorted = true;
         }, ticks);
         return i + 1;
     }
