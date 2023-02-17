@@ -1,35 +1,28 @@
 # Algorithm Visualizer
 
-- Version Alpha 0.1
+- Version Alpha 0.2
 
 # To do
 
-## 0.1
-
-- provide more detailed merge sort animation
-- provide more detailed quick sort animation
-- Start binary search
-- Start linear search
-
-## 0.2
-
-- let user select number of nodes
-
 ## 0.3
 
-- update node_master.js
+- complete binary search walkthrough
+- complete linear search walkthrough
 
 ## 0.4
 
-- displacement animations
+- update NodeMaster.js management technique
 
 ## 0.5
-- rewind
-- change the speed of animations
 
-## 0.6
-- increase the detail of animations
+- dumb down animations
 
-## 1.0
+## 0.7
 
-- test users by 
+- displacement animations
+
+
+## 0.8
+
+- add user interaction
+
