@@ -1,4 +1,4 @@
-# Algorithm Visualizer
+# Algorithm Prime
 
 - Version Alpha 0.2
 
@@ -6,16 +6,16 @@
 
 ## 0.3
 
-- complete binary search walkthrough
-- complete linear search walkthrough
+- basic binary search walkthrough
+- basic linear search walkthrough
 
 ## 0.4
 
-- update NodeMaster.js management technique
+- update NodeMaster.js management
 
 ## 0.5
 
-- dumb down animations
+- ease control of algorithm playthroughs
 
 ## 0.7
 
