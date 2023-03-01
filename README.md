@@ -1,4 +1,4 @@
-# Algorithm Prime
+# html js css
 
 - Version Alpha 0.2
 
@@ -21,8 +21,6 @@
 
 - displacement animations
 
-
 ## 0.8
 
 - add user interaction
-
