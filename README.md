@@ -4,23 +4,15 @@
 
 # To do
 
-## 0.3
+## 0.0
 
-- basic binary search walkthrough
-- basic linear search walkthrough
+- links
 
-## 0.4
+## 0.1
 
-- update NodeMaster.js management
+- basic animations
 
-## 0.5
+## 0.2
 
-- ease control of algorithm playthroughs
-
-## 0.7
-
-- displacement animations
-
-## 0.8
-
-- add user interaction
+- basic coloring
+- some sorting algorithms
