@@ -2,7 +2,7 @@
 
 - Version Alpha 0.2
 
-# To do
+# Version
 
 ## 0.0
 
@@ -16,3 +16,23 @@
 
 - basic coloring
 - some sorting algorithms
+- select number of nodes
+
+# To do
+- improve merge and quick sort
+- more dynamic
+	- rewind
+	- forward
+	- back
+	- next
+- display code
+	- highlight line of code
+		- highlight segment
+- assess user
+	- user interaction
+		- move nodes 
+		- select nodes
+		- pop up menu for selected nodes
+	- record user interaction
+	- grade user interaction
+	
