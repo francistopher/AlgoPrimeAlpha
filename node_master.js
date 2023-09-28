@@ -98,15 +98,25 @@ class NodeMaster {
          this.searchField.style.borderStyle = "solid";
          this.searchField.style.borderBlockColor = "black";
          this.searchField.placeholder = "Enter value here!";
+         this.searchField.style.display = "block";
          document.body.appendChild(this.searchField);
       }
    }
 
    getSearchFieldValue() {
-      console.log(this.searchField.value);
+      return this.searchField.value;
    }
 
    hideSearchField() {
       this.searchField.style.display = "none";
+   }
+
+   checkForValue() {
+      const isSearchFieldClear = this.searchField.value.length == 0;
+      console.log(isSearchFieldClear);
+      if (isSearchFieldClear) {
+         this.searchField.placeholder = "ENTER VALUE HERE!";
+      }
+      return isSearchFieldClear;
    }
 }
