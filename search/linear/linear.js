@@ -20,13 +20,16 @@ class Linear extends NodeMaster {
 
    #checkElement(index) {
       const currentElement = this.stage[index];
+      currentElement["node"].label.style.borderColor = "yellow";
       const elementFound = currentElement["node"].value + 1 == this.getSearchFieldValue();
-      if (elementFound) {
-         currentElement["node"].label.style.borderColor = "yellowgreen";
-         console.log("found");
-      } else {
-         currentElement["node"].label.style.borderColor = "red";
-      }
+      setTimeout(() => {
+         if (elementFound) {
+            currentElement["node"].label.style.borderColor = "green";
+            console.log("found");
+         } else {
+            currentElement["node"].label.style.borderColor = "red";
+         }
+      }, 900);
       return elementFound;
    }
 
@@ -36,9 +39,9 @@ class Linear extends NodeMaster {
          if (this.#checkElement(index)) {
             return;
          }
-         this.#search(index + 1, count);
-      } else {
-         // nothing found
+         setTimeout(() => {
+            this.#search(index + 1, count);
+         }, 1000);
       }
    }
 }
