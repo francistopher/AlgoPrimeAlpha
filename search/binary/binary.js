@@ -1,26 +1,34 @@
-function binarySearch(arr, start, end, item) // same time complexity of Ω(logn) // space complexity Ω(1)
-{
-    var mid = 0;
-    while (end > start)
-    {
-        mid = Math.ceil(start + (end - start) / 2);
-        if (arr[mid] == item)
-        {
-            return mid;
-        }
-        if (arr[mid] > item)
-        {
-            start = mid + 1;
-        }
-        else
-        {
-            end = mid;
-        }
-    }
-    return -1;
-}
-var arr = [4, 5, 7, 2, 9, 4, 7];
-console.log("1");
-var index = binarySearch(arr, 0, arr.length, 9);
-console.log(index, arr[index]);
+class Binary extends NodeMaster {
+   constructor() {
+      super();
+      // has to be ordered for binary search to work
+      this.shuffleButton.style.display = "none";
+      this.sortButton.innerHTML = "Search";
+      this.sortButton.style.display = "block";
+      this.createSearchField();
+      this.sortButton.addEventListener("click", () => {
+         if (!this.checkForValue()) {
+            console.log("index", this.#binarySearch(0, this.stage.length));
+         }
+      });
+   }
 
+   #binarySearch(startIndex, endIndex) {
+      console.log(startIndex, endIndex);
+      if (endIndex > startIndex) {
+         const mid = Math.floor(startIndex + (endIndex - startIndex) / 2);
+         //console.log(mid);
+         const midElement = this.stage[mid]["node"];
+         //console.log(midElement);
+         if (midElement.value + 1 == this.getSearchFieldValue()) {
+            return mid;
+         }
+         if (midElement.value + 1 < this.getSearchFieldValue()) {
+            return this.#binarySearch(mid + 1, endIndex);
+         } else {
+            return this.#binarySearch(startIndex, mid);
+         }
+      }
+      return -1;
+   }
+}
