@@ -34,6 +34,14 @@ class TreeNodeManager {
       });
    }
 
+   hideShuffleButton() {
+      this.shuffleButton.style.display = "none";
+   }
+
+   showShuffleButton() {
+      this.shuffleButton.style.display = "inline";
+   }
+
    /**
     * Shuffles the nodes of the tree by
     * unloading the element values into an array
@@ -55,6 +63,14 @@ class TreeNodeManager {
       });
    }
 
+   hideSortButton() {
+      this.sortButton.style.display = "none";
+   }
+
+   showSortButton() {
+      this.sortButton.style.display = "inline";
+   }
+
    /**
     * Returns a slider responsible for updating the number of nodes in the tree
     */
@@ -72,6 +88,14 @@ class TreeNodeManager {
       this.nodeCountSlider.style.display = "inline";
    }
 
+   #hideNodeCountSlider() {
+      this.nodeCountSlider.style.display = "none";
+   }
+
+   #showNodeCountSlider() {
+      this.nodeCountSlider.style.display = "inline";
+   }
+
    #setSearchField() {
       this.searchField = document.createElement("input");
       this.searchField.style.borderStyle = "solid";
@@ -81,11 +105,19 @@ class TreeNodeManager {
       document.body.appendChild(this.searchField);
    }
 
+   #hideSearchField() {
+      this.searchField.style.display = "none";
+   }
+
+   #showSearchField() {
+      this.searchField.style.display = "inline";
+   }
+
    getSearchValue() {
       return this.searchField.value;
    }
 
-   hideSearchFieldValue() {
+   getSearchFieldValue() {
       return this.searchField.value;
    }
 
@@ -104,6 +136,14 @@ class TreeNodeManager {
          console.log("SEARCH SEARCH");
       });
       document.body.appendChild(this.searchButton);
+   }
+
+   #hideSearchButton() {
+      this.searchButton.style.display = "none";
+   }
+
+   #showSearchButton() {
+      this.searchButton.style.display = "inline";
    }
 }
 
