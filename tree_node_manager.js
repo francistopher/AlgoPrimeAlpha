@@ -15,7 +15,7 @@ class TreeNodeManager {
       this.searchField;
       // create components user can see
       this.#setShuffleButton();
-      this.#setSortButton();
+      this.#setBalanceButton();
       this.#setNodeCountSlider();
       this.#setSearchField();
       this.#setSearchButton();
@@ -53,21 +53,21 @@ class TreeNodeManager {
    /**
     * Returns the button which is responsible for sorting the elements in the tree
     */
-   #setSortButton() {
+   #setBalanceButton() {
       this.sortButton = document.createElement("BUTTON");
-      this.sortButton.innerHTML = "SORT";
+      this.sortButton.innerHTML = "BALANCE";
       document.body.appendChild(this.sortButton);
       this.sortButton.style.display = "inline";
       this.sortButton.addEventListener("click", () => {
-         console.log("SORT SORT");
+         console.log("BALANCE BALANCE");
       });
    }
 
-   hideSortButton() {
+   hideBalanceButton() {
       this.sortButton.style.display = "none";
    }
 
-   showSortButton() {
+   showBalanceButton() {
       this.sortButton.style.display = "inline";
    }
 
@@ -130,19 +130,21 @@ class TreeNodeManager {
    }
 
    #setSearchButton() {
+      console.log("searchhhhhh");
       this.searchButton = document.createElement("BUTTON");
       this.searchButton.innerHTML = "SEARCH";
       this.searchButton.addEventListener("click", () => {
          console.log("SEARCH SEARCH");
       });
+      this.searchButton.style.display = "inline";
       document.body.appendChild(this.searchButton);
    }
 
-   #hideSearchButton() {
+   hideSearchButton() {
       this.searchButton.style.display = "none";
    }
 
-   #showSearchButton() {
+   showSearchButton() {
       this.searchButton.style.display = "inline";
    }
 }
