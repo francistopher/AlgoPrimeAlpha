@@ -53,7 +53,6 @@ class TreeNodeManager {
       this.sortButton.addEventListener("click", () => {
          console.log("SORT SORT");
       });
-      this.sortButton.style.display = "none";
    }
 
    /**
