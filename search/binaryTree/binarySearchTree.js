@@ -3,6 +3,5 @@ class BinarySearchTree extends TreeNodeManager {
       super(2);
       // binary tree cant balance
       this.hideBalanceButton();
-      this.showSearchButton();
    }
 }
