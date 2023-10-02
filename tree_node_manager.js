@@ -17,6 +17,8 @@ class TreeNodeManager {
       this.#setShuffleButton();
       this.#setSortButton();
       this.#setNodeCountSlider();
+      this.#setSearchField();
+      this.#setSearchButton();
    }
 
    /**
@@ -51,6 +53,7 @@ class TreeNodeManager {
       this.sortButton.addEventListener("click", () => {
          console.log("SORT SORT");
       });
+      this.sortButton.style.display = "none";
    }
 
    /**
@@ -68,6 +71,40 @@ class TreeNodeManager {
       });
       document.body.appendChild(this.nodeCountSlider);
       this.nodeCountSlider.style.display = "inline";
+   }
+
+   #setSearchField() {
+      this.searchField = document.createElement("input");
+      this.searchField.style.borderStyle = "solid";
+      this.searchField.style.borderBlockColor = "black";
+      this.searchField.placeholder = "Enter value here!";
+      this.searchField.style.display = "inline";
+      document.body.appendChild(this.searchField);
+   }
+
+   getSearchValue() {
+      return this.searchField.value;
+   }
+
+   hideSearchFieldValue() {
+      return this.searchField.value;
+   }
+
+   checkForValue() {
+      const isSearchFieldClear = this.searchField.value.length == 0;
+      if (isSearchFieldClear) {
+         this.searchField.placeholder = "ENTER VALUE HERE!";
+      }
+      return isSearchFieldClear;
+   }
+
+   #setSearchButton() {
+      this.searchButton = document.createElement("BUTTON");
+      this.searchButton.innerHTML = "SEARCH";
+      this.searchButton.addEventListener("click", () => {
+         console.log("SEARCH SEARCH");
+      });
+      document.body.appendChild(this.searchButton);
    }
 }
 
