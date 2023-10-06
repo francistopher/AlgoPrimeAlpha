@@ -5,7 +5,7 @@ class TreeNodeManager {
    constructor(maxChildren) {
       // variables about the tree itself
       this.values = [];
-      this.head;
+      this.root = NaN;
       this.nodeCount = 1;
       this.maxChildren = maxChildren;
       // components users can see
@@ -19,6 +19,10 @@ class TreeNodeManager {
       this.#setNodeCountSlider();
       this.#setSearchField();
       this.#setSearchButton();
+   }
+
+   getRoot() {
+      return this.root;
    }
 
    /**
