@@ -20,6 +20,7 @@ class BinarySearchTree extends TreeNodeManager {
    #listenToAddGeneratedValue() {
       this.nodeCountSlider.addEventListener("input", () => {
          this.#addGeneratedValue();
+         this.#removeGeneratedValue();
       });
    }
 
@@ -35,6 +36,17 @@ class BinarySearchTree extends TreeNodeManager {
          }
          if (this.values.length != this.nodeCountSlider.value) {
             this.#addGeneratedValue();
+            this.#removeGeneratedValue();
+         }
+      }
+   }
+
+   #removeGeneratedValue() {
+      if (this.values.length > this.nodeCountSlider.value) {
+         this.values.pop(this.values.length - 1);
+         if (this.values.length != this.nodeCountSlider.value) {
+            this.#addGeneratedValue();
+            this.#removeGeneratedValue();
          }
       }
    }
