@@ -40,9 +40,13 @@ class BinarySearchTree extends TreeNodeManager {
       }
    }
 
+   /**
+    * Makes sure values are removed when the slider is set to a value less than the count of values
+    */
    #removeGeneratedValue() {
       if (this.values.length > this.nodeCountSlider.value) {
-         this.values.pop(this.values.length - 1);
+         const removedValue = this.values.pop(this.values.length - 1);
+         this.#removeNode(removedValue, this.root);
          if (this.values.length != this.nodeCountSlider.value) {
             this.#addGeneratedValue();
             this.#removeGeneratedValue();
@@ -50,6 +54,10 @@ class BinarySearchTree extends TreeNodeManager {
       }
    }
 
+   /**
+    * Renders a node with value
+    * @param {Number} value displayed on the node
+    */
    #addNode(value) {
       if (!this.getRoot()) {
          this.root = new TreeNode(value, this.maxChildren);
@@ -57,7 +65,24 @@ class BinarySearchTree extends TreeNodeManager {
       }
    }
 
-   #removeNode() {}
+   /**
+    * Searches through the binary search tree to remove the node with the specified value
+    * @param {Number} value
+    * @param {TreeNode} node
+    */
+   #removeNode(value, node) {
+      if (node && node.value == value) {
+         node.remove();
+         if (node === this.root) this.root = NaN;
+      } else {
+         if (node && node.children[0]) {
+            this.#removeNode(value, node.children[0]);
+         }
+         if (node && node.children[1]) {
+            this.#removeNode(value, node.children[1]);
+         }
+      }
+   }
 
    #createPath() {}
 }
