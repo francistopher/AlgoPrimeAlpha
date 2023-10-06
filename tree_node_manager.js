@@ -43,14 +43,6 @@ class TreeNodeManager {
    }
 
    /**
-    * Shuffles the nodes of the tree by
-    * unloading the element values into an array
-    * shuffles the array with the element values
-    * and rebuilds the tree with the shuffled elements
-    */
-   #shuffleNodes() {}
-
-   /**
     * Returns the button which is responsible for sorting the elements in the tree
     */
    #setBalanceButton() {
@@ -77,13 +69,10 @@ class TreeNodeManager {
    #setNodeCountSlider() {
       this.nodeCountSlider = document.createElement("input");
       this.nodeCountSlider.type = "range";
-      this.nodeCountSlider.value = this.nodeCount + "";
+      this.nodeCountSlider.value = 0;
       this.nodeCountSlider.min = "0";
       this.nodeCountSlider.max = "20";
       this.nodeCountSlider.style.accentColor = "black";
-      this.nodeCountSlider.addEventListener("input", () => {
-         console.log("SLIDE SLIDE", this.nodeCountSlider.value);
-      });
       document.body.appendChild(this.nodeCountSlider);
       this.nodeCountSlider.style.display = "inline";
    }
