@@ -1,13 +1,11 @@
 class BinarySearchTree extends TreeNodeManager {
    constructor() {
       super(2);
+      this.root = NaN;
       // binary tree cant balance
       this.hideBalanceButton();
-      this.root;
       this.#listenToAddGeneratedValue();
    }
-
-   #buildNodes() {}
 
    /**
     * Shuffles the nodes of the tree by
@@ -32,6 +30,7 @@ class BinarySearchTree extends TreeNodeManager {
             this.#addGeneratedValue();
          } else {
             this.values.push(randommm);
+            this.#addNode(randommm);
             console.log(randommm, this.values, this.values.length, this.nodeCountSlider.value);
          }
          if (this.values.length != this.nodeCountSlider.value) {
@@ -51,11 +50,14 @@ class BinarySearchTree extends TreeNodeManager {
       }
    }
 
-   addNode() {
-      if (this.root == NaN) {
-         this.root = new TreeNode(this.maxChildren);
+   #addNode(value) {
+      if (!this.getRoot()) {
+         this.root = new TreeNode(value, this.maxChildren);
+         this.root.setPosition("calc((100vw - 3vw) * 0.5)", "3vw");
       }
    }
+
+   #removeNode() {}
 
    #createPath() {}
 }
