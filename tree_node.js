@@ -20,7 +20,7 @@ class TreeNode {
    #buildLabel() {
       this.label = document.createElement("LABEL");
       this.label.id = "node";
-      this.label.innerHTML = this.value + 1;
+      this.label.innerHTML = this.value;
    }
 
    remove() {
