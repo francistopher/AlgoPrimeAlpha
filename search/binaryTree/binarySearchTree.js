@@ -31,7 +31,10 @@ class BinarySearchTree extends TreeNodeManager {
             this.#addGeneratedValue();
          } else {
             this.values.push(randommm);
-            // console.log(randommm, this.values, this.values.length, this.nodeCountSlider.value);
+            console.log(randommm, this.values, this.values.length, this.nodeCountSlider.value);
+         }
+         if (this.values.length != this.nodeCountSlider.value) {
+            this.#addGeneratedValue();
          }
       }
    }
