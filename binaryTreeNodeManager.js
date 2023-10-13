@@ -9,13 +9,10 @@ class BinaryTreeNodeManager {
       this.nodeCount = 1;
       this.maxChildren = maxChildren;
       // components users can see
-      this.shuffleButton;
       this.sortButton;
       this.nodeCountSlider;
       this.searchField;
       // create components user can see
-      this.#setShuffleButton();
-      this.#setBalanceButton();
       this.#setNodeCountSlider();
       this.#setSearchField();
       this.#setSearchButton();
@@ -24,48 +21,6 @@ class BinaryTreeNodeManager {
    // returns the root of the tree
    getRoot() {
       return this.root;
-   }
-
-   /**
-    * Creates and returns the button that shuffles the nodes of the tree
-    */
-   #setShuffleButton() {
-      this.shuffleButton = document.createElement("BUTTON");
-      this.shuffleButton.innerHTML = "SHUFFLE";
-      document.body.appendChild(this.shuffleButton);
-      this.shuffleButton.style.display = "inline";
-      this.shuffleButton.addEventListener("click", () => {
-         console.log("SHUFFLE SHUFFLE");
-      });
-   }
-
-   hideShuffleButton() {
-      this.shuffleButton.style.display = "none";
-   }
-
-   showShuffleButton() {
-      this.shuffleButton.style.display = "inline";
-   }
-
-   /**
-    * Returns the button which is responsible for sorting the elements in the tree
-    */
-   #setBalanceButton() {
-      this.sortButton = document.createElement("BUTTON");
-      this.sortButton.innerHTML = "BALANCE";
-      document.body.appendChild(this.sortButton);
-      this.sortButton.style.display = "inline";
-      this.sortButton.addEventListener("click", () => {
-         console.log("BALANCE BALANCE");
-      });
-   }
-
-   hideBalanceButton() {
-      this.sortButton.style.display = "none";
-   }
-
-   showBalanceButton() {
-      this.sortButton.style.display = "inline";
    }
 
    /**
@@ -82,14 +37,6 @@ class BinaryTreeNodeManager {
       this.nodeCountSlider.style.display = "inline";
    }
 
-   #hideNodeCountSlider() {
-      this.nodeCountSlider.style.display = "none";
-   }
-
-   #showNodeCountSlider() {
-      this.nodeCountSlider.style.display = "inline";
-   }
-
    #setSearchField() {
       this.searchField = document.createElement("input");
       this.searchField.style.borderStyle = "solid";
@@ -97,14 +44,6 @@ class BinaryTreeNodeManager {
       this.searchField.placeholder = "Enter value here!";
       this.searchField.style.display = "inline";
       document.body.appendChild(this.searchField);
-   }
-
-   #hideSearchField() {
-      this.searchField.style.display = "none";
-   }
-
-   #showSearchField() {
-      this.searchField.style.display = "inline";
    }
 
    getSearchValue() {
@@ -129,21 +68,39 @@ class BinaryTreeNodeManager {
       this.searchButton.innerHTML = "SEARCH";
       this.searchButton.addEventListener("click", () => {
          console.log("SEARCH SEARCH");
+         if (this.getSearchFieldValue()) {
+            this.nodeCountSlider.disabled = true;
+            this.searchField.disabled = true;
+            this.searchButton.disabled = true;
+            this.#startSearch(this.root);
+         }
       });
       this.searchButton.style.display = "inline";
       document.body.appendChild(this.searchButton);
    }
 
-   hideSearchButton() {
-      this.searchButton.style.display = "none";
-   }
-
-   showSearchButton() {
-      this.searchButton.style.display = "inline";
+   #startSearch(node) {
+      // the node exists
+      if (node) {
+         // set yellow for comparing
+         node.label.style.borderColor = "yellow";
+         setTimeout(() => {
+            if (node.value == this.searchField.value) {
+               node.label.style.borderColor = "green";
+               this.nodeCountSlider.disabled = false;
+               this.searchField.disabled = false;
+               this.searchButton.disabled = false;
+            } else {
+               node.label.style.borderColor = "red";
+               if (node.value > this.searchField.value) {
+                  node.leftChild.parentBranch.style.backgroundColor = "green";
+                  this.#startSearch(node.leftChild);
+               } else if (node.value < this.searchField.value) {
+                  node.rightChild.parentBranch.style.backgroundColor = "green";
+                  this.#startSearch(node.rightChild);
+               }
+            }
+         }, 1000);
+      }
    }
 }
-
-const Tree = {
-   BINARY: 0,
-   AVL: 1,
-};

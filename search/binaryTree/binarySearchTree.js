@@ -3,7 +3,6 @@ class BinarySearchTree extends BinaryTreeNodeManager {
       super(2);
       this.root = NaN;
       // binary tree cant balance
-      this.hideBalanceButton();
       this.#listenToAddGeneratedValue();
    }
 
