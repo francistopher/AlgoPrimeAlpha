@@ -60,7 +60,7 @@ class BinarySearchTree extends BinaryTreeNodeManager {
     */
    #addNode(value) {
       if (!this.getRoot()) {
-         this.root = new TreeNode(value, this.maxChildren);
+         this.root = new BinaryTreeNode(value, this.maxChildren);
          this.root.setPosition("calc((100vw - 3vw) * 0.5)", "3vw");
       }
    }
@@ -68,7 +68,7 @@ class BinarySearchTree extends BinaryTreeNodeManager {
    /**
     * Searches through the binary search tree to remove the node with the specified value
     * @param {Number} value
-    * @param {TreeNode} node
+    * @param {BinaryTreeNode} node
     */
    #removeNode(value, node) {
       if (node && node.value == value) {

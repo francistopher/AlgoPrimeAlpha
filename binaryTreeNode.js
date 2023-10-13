@@ -1,4 +1,4 @@
-class TreeNode {
+class BinaryTreeNode {
    constructor(value, maxChildren) {
       // node aspect
       this.value = value;
@@ -8,12 +8,15 @@ class TreeNode {
       this.#buildLabel();
       // tree aspect
       this.maxChildren = maxChildren;
-      this.children = [];
+      this.leftChild = NaN;
+      this.rightChild = NaN;
    }
 
-   #addChild(treeNode) {
-      if (children.size() < this.maxChildren) {
-         children.append(treeNode);
+   #addChild(binaryTreeNode) {
+      if (binaryTreeNode.value < this.value) {
+         this.leftChild = binaryTreeNode;
+      } else {
+         this.rightChild = binaryTreeNode;
       }
    }
 
