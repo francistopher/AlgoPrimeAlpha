@@ -1,7 +1,7 @@
 /*
    Manages the node elements of tree like structure
 */
-class TreeNodeManager {
+class BinaryTreeNodeManager {
    constructor(maxChildren) {
       // variables about the tree itself
       this.values = [];
@@ -21,6 +21,7 @@ class TreeNodeManager {
       this.#setSearchButton();
    }
 
+   // returns the root of the tree
    getRoot() {
       return this.root;
    }

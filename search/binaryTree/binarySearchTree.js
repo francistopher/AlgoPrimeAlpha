@@ -1,4 +1,4 @@
-class BinarySearchTree extends TreeNodeManager {
+class BinarySearchTree extends BinaryTreeNodeManager {
    constructor() {
       super(2);
       this.root = NaN;
