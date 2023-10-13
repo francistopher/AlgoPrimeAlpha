@@ -58,9 +58,15 @@ class BinarySearchTree extends BinaryTreeNodeManager {
     * Renders a node with value
     * @param {Number} value displayed on the node
     */
-   #addNode(value) {
-      if (!this.getRoot()) {
-         this.root = new BinaryTreeNode(value, this.maxChildren);
+   #addNode(newValue) {
+      // if root exists, send child with value to root
+      if (this.getRoot()) {
+         const newChild = new BinaryTreeNode(newValue);
+         this.getRoot().addChild(newChild, 1, 0);
+      }
+      // if root does not exist, create root with new value
+      else {
+         this.root = new BinaryTreeNode(newValue);
          this.root.setPosition("calc((100vw - 3vw) * 0.5)", "3vw");
       }
    }
