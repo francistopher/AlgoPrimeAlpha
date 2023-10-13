@@ -77,10 +77,10 @@ class BinaryTreeNode {
 
    #buildParentBranch(parentNode, currentNode) {
       // styling the parent branch
-      const parentBranch = document.createElement("div");
-      parentBranch.style.backgroundColor = "black";
-      parentBranch.style.position = "absolute";
-      parentBranch.style.height = "0.5vw";
+      currentNode.parentBranch = document.createElement("div");
+      currentNode.parentBranch.style.backgroundColor = "black";
+      currentNode.parentBranch.style.position = "absolute";
+      currentNode.parentBranch.style.height = "0.5vw";
       // getting necessary values to calculate the length
       const parentNodeLeft = this.#getRawValue(parentNode.label.style.left) + 0.5;
       const parentNodeTop = this.#getRawValue(parentNode.label.style.top) + 0.5;
@@ -90,33 +90,33 @@ class BinaryTreeNode {
       const branchLength = Math.sqrt(
          Math.pow(currentNodeLeft - parentNodeLeft, 2) + Math.pow(currentNodeTop - parentNodeTop, 2)
       );
-      parentBranch.style.width = branchLength + "vw";
+      currentNode.parentBranch.style.width = branchLength + "vw";
       // calculate the angle of the branch
       const numerator = parentNodeLeft * currentNodeLeft + parentNodeTop * currentNodeTop;
       const denominator =
          Math.sqrt(Math.pow(parentNodeLeft, 2) + Math.pow(parentNodeTop, 2)) *
          Math.sqrt(Math.pow(currentNodeTop, 2) + Math.pow(currentNodeLeft, 2));
       const fraction = numerator / denominator;
-      parentBranch.style.transformOrigin = "center";
+      currentNode.parentBranch.style.transformOrigin = "center";
       var angle = (Math.acos(fraction) * 180) / Math.PI;
       // format the angle and apply the positioning of the branch based on which child it is
       // left child
       if (parentNodeLeft > currentNodeLeft) {
          angle += 145;
-         parentBranch.style.left = currentNode.label.style.left;
-         parentBranch.style.top = currentNode.label.style.top;
+         currentNode.parentBranch.style.left = currentNode.label.style.left;
+         currentNode.parentBranch.style.top = currentNode.label.style.top;
       }
       // right child
       else {
          angle += 30;
-         parentBranch.style.left = parentNode.label.style.left;
-         parentBranch.style.top = currentNode.label.style.top;
+         currentNode.parentBranch.style.left = parentNode.label.style.left;
+         currentNode.parentBranch.style.top = currentNode.label.style.top;
       }
-      parentBranch.style.marginLeft = "1.25vw";
+      currentNode.parentBranch.style.marginLeft = "1.25vw";
       //console.log(angle);
       // apply the angle to the branch
-      parentBranch.style.transform = "rotate(" + angle + "deg)";
-      document.body.appendChild(parentBranch);
+      currentNode.parentBranch.style.transform = "rotate(" + angle + "deg)";
+      document.body.appendChild(currentNode.parentBranch);
    }
 
    // updates the z index of the parent, left child, right child, and the branch
@@ -134,8 +134,10 @@ class BinaryTreeNode {
       //this.label.style.zIndex = "100";
    }
 
+   // remove the label and it's dedicated branch from the the html document
    remove() {
       this.label.remove();
+      this.parentBranch.remove();
    }
 
    setPosition(left, top) {
