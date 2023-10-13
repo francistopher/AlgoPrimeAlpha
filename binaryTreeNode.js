@@ -137,7 +137,9 @@ class BinaryTreeNode {
    // remove the label and it's dedicated branch from the the html document
    remove() {
       this.label.remove();
-      this.parentBranch.remove();
+      if (this.parentBranch) {
+         this.parentBranch.remove();
+      }
    }
 
    setPosition(left, top) {
