@@ -61,6 +61,7 @@ class NodeMaster {
       }
    }
 
+   // removes all the elements present from the current html document
    #cleanStage() {
       for (var i = 0; i < this.stage.length; i++) {
          this.stage[i]["node"].remove();
@@ -69,12 +70,14 @@ class NodeMaster {
       console.log(this.stage.length);
    }
 
+   // updates the html document with the new node count
    #updateNodeCount(newNodeCount) {
       this.nodeCount = parseInt(newNodeCount);
       this.#cleanStage();
       this.#buildNodes();
    }
 
+   // renders the node count slider on the html document
    #buildNodeCountSlider() {
       this.nodeCountSlider = document.createElement("input");
       this.nodeCountSlider.type = "range";
@@ -88,6 +91,7 @@ class NodeMaster {
       document.body.appendChild(this.nodeCountSlider);
    }
 
+   // renders the search field on the html document
    createSearchField() {
       if (this.searchField) {
          console.log("showing");
@@ -103,14 +107,17 @@ class NodeMaster {
       }
    }
 
+   // returns the search value the user has typed in
    getSearchFieldValue() {
       return this.searchField.value;
    }
 
+   // removes the search field from the user's prescence
    hideSearchField() {
       this.searchField.style.display = "none";
    }
 
+   // returns whether or not a value has been entered in the search field
    checkForValue() {
       const isSearchFieldClear = this.searchField.value.length == 0;
       console.log(isSearchFieldClear);
