@@ -46,9 +46,13 @@ class BinarySearchTree extends BinaryTreeNodeManager {
    #removeGeneratedValue() {
       if (this.values.length > this.nodeCountSlider.value) {
          const removedValue = this.values.pop(this.values.length - 1);
-         this.#removeNode(removedValue, this.root);
+         if (removedValue == this.root.value) {
+            this.root.remove();
+            this.root = NaN;
+         } else {
+            this.#removeNode(removedValue, this.root);
+         }
          if (this.values.length != this.nodeCountSlider.value) {
-            this.#addGeneratedValue();
             this.#removeGeneratedValue();
          }
       }
@@ -78,19 +82,17 @@ class BinarySearchTree extends BinaryTreeNodeManager {
     */
    #removeNode(value, node) {
       // the value is equal to the root node's value
-      if (node && value == this.root.value) {
-         this.root.remove();
-         this.root = NaN;
+
+      if (node && value == node.value) {
+         node.remove();
       } else if (node) {
          // the value is less than the root node's value
-         if (node.leftChild && value < this.root.value) {
+         if (node.leftChild && value < node.value) {
             this.#removeNode(value, node.leftChild);
-            node.leftChild = NaN;
          }
          // the value is more than the root node's value
-         if (node.rightChild && value > this.root.value) {
+         if (node.rightChild && value > node.value) {
             this.#removeNode(value, node.rightChild);
-            node.rightChild = NaN;
          }
       }
    }
