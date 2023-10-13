@@ -71,18 +71,21 @@ class BinarySearchTree extends BinaryTreeNodeManager {
     * @param {BinaryTreeNode} node
     */
    #removeNode(value, node) {
-      if (node && node.value == value) {
-         node.remove();
-         if (node === this.root) this.root = NaN;
-      } else {
-         if (node && node.leftChild) {
+      // the value is equal to the root node's value
+      if (node && value == this.root.value) {
+         this.root.remove();
+         this.root = NaN;
+      } else if (node) {
+         // the value is less than the root node's value
+         if (node.leftChild && value < this.root.value) {
             this.#removeNode(value, node.leftChild);
+            node.leftChild = NaN;
          }
-         if (node && node.rightChild) {
+         // the value is more than the root node's value
+         if (node.rightChild && value > this.root.value) {
             this.#removeNode(value, node.rightChild);
+            node.rightChild = NaN;
          }
       }
    }
-
-   #createPath() {}
 }
