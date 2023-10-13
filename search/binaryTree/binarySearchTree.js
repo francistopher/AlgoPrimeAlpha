@@ -75,11 +75,11 @@ class BinarySearchTree extends BinaryTreeNodeManager {
          node.remove();
          if (node === this.root) this.root = NaN;
       } else {
-         if (node && node.children[0]) {
-            this.#removeNode(value, node.children[0]);
+         if (node && node.leftChild) {
+            this.#removeNode(value, node.leftChild);
          }
-         if (node && node.children[1]) {
-            this.#removeNode(value, node.children[1]);
+         if (node && node.rightChild) {
+            this.#removeNode(value, node.rightChild);
          }
       }
    }
