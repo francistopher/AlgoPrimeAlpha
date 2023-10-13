@@ -85,6 +85,7 @@ class BinarySearchTree extends BinaryTreeNodeManager {
 
       if (node && value == node.value) {
          node.remove();
+         node = NaN;
       } else if (node) {
          // the value is less than the root node's value
          if (node.leftChild && value < node.value) {

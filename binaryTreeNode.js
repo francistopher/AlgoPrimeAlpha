@@ -140,6 +140,12 @@ class BinaryTreeNode {
       if (this.parentBranch) {
          this.parentBranch.remove();
       }
+      if (this.parentNode.leftChild && this.parentNode.leftChild.value == this.value) {
+         this.parentNode.leftChild = NaN;
+      }
+      if (this.parentNode.rightChild && this.parentNode.rightChild.value == this.value) {
+         this.parentNode.rightChild = NaN;
+      }
    }
 
    setPosition(left, top) {
