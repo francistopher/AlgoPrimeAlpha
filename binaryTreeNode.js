@@ -33,6 +33,7 @@ class BinaryTreeNode {
             newChild.parentNode = this;
             this.leftChild = newChild;
             this.#buildParentBranch(this, newChild);
+            this.#updateInnerFamilyZIndexes(level, newChild);
          }
          // and left child does exist
          else {
@@ -57,6 +58,7 @@ class BinaryTreeNode {
             newChild.parentNode = this;
             this.rightChild = newChild;
             this.#buildParentBranch(this, newChild);
+            this.#updateInnerFamilyZIndexes(level, newChild);
          }
          // and right child does exist
          else {
@@ -115,6 +117,13 @@ class BinaryTreeNode {
       // apply the angle to the branch
       parentBranch.style.transform = "rotate(" + angle + "deg)";
       document.body.appendChild(parentBranch);
+   }
+
+   // updates the z index of the parent, left child, right child, and the branch
+   #updateInnerFamilyZIndexes(level, child) {
+      child.label.style.zIndex = level;
+      child.parentNode.label.style.zIndex = level;
+      child.parentBranch.style.zIndex = level - 1;
    }
 
    #buildLabel() {
