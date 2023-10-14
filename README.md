@@ -1,6 +1,6 @@
 # html js css
 
-- Version Alpha 0.2
+- Version Alpha 0.3
 
 # Version
 
@@ -18,21 +18,14 @@
 - some sorting algorithms
 - select number of nodes
 
-# To do
-- improve merge and quick sort
-- more dynamic
-	- rewind
-	- forward
-	- back
-	- next
-- display code
-	- highlight line of code
-		- highlight segment
-- assess user
-	- user interaction
-		- move nodes 
-		- select nodes
-		- pop up menu for selected nodes
-	- record user interaction
-	- grade user interaction
-	
+## 0.3
+ - some basic searching algorithms
+
+## 0.4
+ - some searching algorithms
+
+## todo
+ - rerender the spacing of bsts
+ - implement basic avl
+ - implement basic depth first search
+ - implement basic breadth first search
