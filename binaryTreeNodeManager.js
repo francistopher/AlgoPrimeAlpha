@@ -72,11 +72,27 @@ class BinaryTreeNodeManager {
             this.nodeCountSlider.disabled = true;
             this.searchField.disabled = true;
             this.searchButton.disabled = true;
+            this.#unColorAllNodes(this.root);
             this.#startSearch(this.root);
          }
       });
       this.searchButton.style.display = "inline";
       document.body.appendChild(this.searchButton);
+   }
+
+   #unColorAllNodes(node) {
+      if (node && node.label.style.borderColor != "black" && node.label.style.borderColor != "") {
+         if (node.parentBranch) {
+            node.parentBranch.style.backgroundColor = "black";
+         }
+         node.label.style.borderColor = "black";
+         if (node.leftChild) {
+            this.#unColorAllNodes(node.leftChild);
+         }
+         if (node.rightChild) {
+            this.#unColorAllNodes(node.rightChild);
+         }
+      }
    }
 
    #startSearch(node) {
@@ -87,20 +103,32 @@ class BinaryTreeNodeManager {
          setTimeout(() => {
             if (node.value == this.searchField.value) {
                node.label.style.borderColor = "green";
-               this.nodeCountSlider.disabled = false;
-               this.searchField.disabled = false;
-               this.searchButton.disabled = false;
+               this.#enableSearchConfigurations();
             } else {
                node.label.style.borderColor = "red";
                if (node.value > this.searchField.value) {
-                  node.leftChild.parentBranch.style.backgroundColor = "green";
-                  this.#startSearch(node.leftChild);
+                  if (node.leftChild) {
+                     node.leftChild.parentBranch.style.backgroundColor = "green";
+                     this.#startSearch(node.leftChild);
+                  } else {
+                     this.#enableSearchConfigurations();
+                  }
                } else if (node.value < this.searchField.value) {
-                  node.rightChild.parentBranch.style.backgroundColor = "green";
-                  this.#startSearch(node.rightChild);
+                  if (node.rightChild) {
+                     node.rightChild.parentBranch.style.backgroundColor = "green";
+                     this.#startSearch(node.rightChild);
+                  } else {
+                     this.#enableSearchConfigurations();
+                  }
                }
             }
          }, 1000);
       }
+   }
+
+   #enableSearchConfigurations() {
+      this.nodeCountSlider.disabled = false;
+      this.searchField.disabled = false;
+      this.searchButton.disabled = false;
    }
 }
