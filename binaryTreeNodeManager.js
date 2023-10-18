@@ -87,13 +87,24 @@ class BinaryTreeNodeManager {
       this.searchButton.innerHTML = "SEARCH";
       var theMenu = this.searchTypeMenu;
       this.searchButton.addEventListener("click", () => {
-         console.log(theMenu.value);
-         this.nodeCountSlider.disabled = true;
-         this.searchField.disabled = true;
-         this.searchButton.disabled = true;
-         this.#unColorAllNodes(this.root);
-         if (theMenu.value == this.searchTypes[0]) {
-            this.#startSearch(this.root);
+         if (this.getSearchFieldValue() != "") {
+            this.nodeCountSlider.disabled = true;
+            this.searchField.disabled = true;
+            this.searchButton.disabled = true;
+            this.#unColorAllNodes(this.root);
+            var searchOrder = [];
+            if (theMenu.value == this.searchTypes[0]) {
+               this.#startSearch(this.root);
+            } else if (theMenu.value == this.searchTypes[1]) {
+               this.#startPreOrderSearch(this.root, searchOrder);
+            } else if (theMenu.value == this.searchTypes[2]) {
+               this.#startInOrderSearch(this.root, searchOrder);
+            } else if (theMenu.value == this.searchTypes[3]) {
+               this.#startPostOrderSearch(this.root, searchOrder);
+            }
+            for (var i = 0; i < searchOrder.length; i++) {
+               console.log(searchOrder[i].value);
+            }
          }
       });
       this.searchButton.style.display = "inline";
@@ -115,6 +126,7 @@ class BinaryTreeNodeManager {
       }
    }
 
+   // performs the search through value comparison
    #startSearch(node) {
       // the node exists
       if (node) {
@@ -144,6 +156,24 @@ class BinaryTreeNodeManager {
             }
          }, 1000);
       }
+   }
+
+   #startPreOrderSearch(theNode, searchOrder) {
+      searchOrder.push(theNode);
+      if (theNode.leftChild) this.#startPreOrderSearch(theNode.leftChild, searchOrder);
+      if (theNode.rightChild) this.#startPreOrderSearch(theNode.rightChild, searchOrder);
+   }
+
+   #startPostOrderSearch(theNode, searchOrder) {
+      if (theNode.leftChild) this.#startInOrderSearch(theNode.leftChild, searchOrder);
+      if (theNode.rightChild) this.#startInOrderSearch(theNode.rightChild, searchOrder);
+      searchOrder.push(theNode);
+   }
+
+   #startInOrderSearch(theNode, searchOrder) {
+      if (theNode.leftChild) this.#startInOrderSearch(theNode.leftChild, searchOrder);
+      searchOrder.push(theNode);
+      if (theNode.rightChild) this.#startInOrderSearch(theNode.rightChild, searchOrder);
    }
 
    #enableSearchConfigurations() {
