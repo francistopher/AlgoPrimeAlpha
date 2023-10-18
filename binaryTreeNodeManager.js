@@ -15,7 +15,27 @@ class BinaryTreeNodeManager {
       // create components user can see
       this.#setNodeCountSlider();
       this.#setSearchField();
+      // pre post in order
+      this.searchTypeMenu = NaN;
+      this.searchTypes = ["Value-Comparison", "Pre-Order", "In-Order", "Post-Order"];
+      this.#createSearchTypeMenu();
       this.#setSearchButton();
+   }
+
+   #createSearchTypeMenu() {
+      // create the dropdown menu
+      this.searchTypeMenu = document.createElement("SELECT");
+      document.body.appendChild(this.searchTypeMenu);
+      this.searchTypeMenu.style.height = "1vw";
+      this.searchTypeMenu.style.width = "10vw";
+      //console.log(this.searchTypes.length);
+      for (var i = 0; i < this.searchTypes.length; i++) {
+         var anOption = document.createElement("OPTION");
+         anOption.text = this.searchTypes[i];
+         anOption.value = this.searchTypes[i];
+         this.searchTypeMenu.appendChild(anOption);
+      }
+      this.searchTypeMenu.style.display = "block";
    }
 
    // returns the root of the tree
@@ -63,16 +83,16 @@ class BinaryTreeNodeManager {
    }
 
    #setSearchButton() {
-      console.log("searchhhhhh");
       this.searchButton = document.createElement("BUTTON");
       this.searchButton.innerHTML = "SEARCH";
+      var theMenu = this.searchTypeMenu;
       this.searchButton.addEventListener("click", () => {
-         console.log("SEARCH SEARCH");
-         if (this.getSearchFieldValue()) {
-            this.nodeCountSlider.disabled = true;
-            this.searchField.disabled = true;
-            this.searchButton.disabled = true;
-            this.#unColorAllNodes(this.root);
+         console.log(theMenu.value);
+         this.nodeCountSlider.disabled = true;
+         this.searchField.disabled = true;
+         this.searchButton.disabled = true;
+         this.#unColorAllNodes(this.root);
+         if (theMenu.value == this.searchTypes[0]) {
             this.#startSearch(this.root);
          }
       });
