@@ -102,9 +102,7 @@ class BinaryTreeNodeManager {
             } else if (theMenu.value == this.searchTypes[3]) {
                this.#startPostOrderSearch(this.root, searchOrder);
             }
-            for (var i = 0; i < searchOrder.length; i++) {
-               console.log(searchOrder[i].value);
-            }
+            this.#searchThroughOrder(searchOrder, 0);
          }
       });
       this.searchButton.style.display = "inline";
@@ -126,6 +124,31 @@ class BinaryTreeNodeManager {
       }
    }
 
+   // search through the collected order
+   #searchThroughOrder(searchOrder, index) {
+      // accept searchOrder if index is not out of bounds
+      if ((index, searchOrder.length)) {
+         // capture node
+         const leNode = searchOrder[index];
+         // mark node as comparing
+         leNode.label.style.borderColor = "yellow";
+         // wait
+         setTimeout(() => {
+            // check if it equals search value
+            if (this.getSearchFieldValue() == leNode.value) {
+               // mark as met
+               leNode.label.style.borderColor = "green";
+            } else {
+               // mark as not here
+               leNode.label.style.borderColor = "red";
+               this.#searchThroughOrder(searchOrder, index + 1);
+            }
+         }, 1000);
+      } else {
+         this.#enableSearchConfigurations();
+      }
+   }
+
    // performs the search through value comparison
    #startSearch(node) {
       // the node exists
@@ -134,10 +157,13 @@ class BinaryTreeNodeManager {
          node.label.style.borderColor = "yellow";
          setTimeout(() => {
             if (node.value == this.searchField.value) {
+               // set green for found
                node.label.style.borderColor = "green";
                this.#enableSearchConfigurations();
             } else {
+               // set red for not found here
                node.label.style.borderColor = "red";
+               // if value is less than iterate through left child
                if (node.value > this.searchField.value) {
                   if (node.leftChild) {
                      node.leftChild.parentBranch.style.backgroundColor = "green";
@@ -145,6 +171,7 @@ class BinaryTreeNodeManager {
                   } else {
                      this.#enableSearchConfigurations();
                   }
+                  // if value is greater than iterate through right child
                } else if (node.value < this.searchField.value) {
                   if (node.rightChild) {
                      node.rightChild.parentBranch.style.backgroundColor = "green";
@@ -158,18 +185,21 @@ class BinaryTreeNodeManager {
       }
    }
 
+   // pre order traversal
    #startPreOrderSearch(theNode, searchOrder) {
       searchOrder.push(theNode);
       if (theNode.leftChild) this.#startPreOrderSearch(theNode.leftChild, searchOrder);
       if (theNode.rightChild) this.#startPreOrderSearch(theNode.rightChild, searchOrder);
    }
 
+   // post order traversal
    #startPostOrderSearch(theNode, searchOrder) {
       if (theNode.leftChild) this.#startInOrderSearch(theNode.leftChild, searchOrder);
       if (theNode.rightChild) this.#startInOrderSearch(theNode.rightChild, searchOrder);
       searchOrder.push(theNode);
    }
 
+   // in order traversal
    #startInOrderSearch(theNode, searchOrder) {
       if (theNode.leftChild) this.#startInOrderSearch(theNode.leftChild, searchOrder);
       searchOrder.push(theNode);
