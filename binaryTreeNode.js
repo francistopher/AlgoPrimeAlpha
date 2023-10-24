@@ -12,6 +12,59 @@ class BinaryTreeNode {
       // rendering aspect
       this.parentNode = NaN;
       this.parentBranch = NaN;
+      this.isRightChild = false;
+      this.isLeftChild = false;
+   }
+
+   stretchSameDirectionAncestorBranches(newNode, stretchDirection) {
+      // found root
+      if (newNode.parentBranch) {
+         // find the root
+         this.stretchSameDirectionAncestorBranches(newNode.parentNode, stretchDirection);
+         if (stretchDirection == 1 && newNode.isRightChild) {
+            newNode.setPosition("calc(" + newNode.left + " + " + 3 + "vw)", newNode.top);
+            if (newNode.parentNode) {
+               newNode.parentBranch.remove();
+               newNode.parentBranch = NaN;
+               this.#buildParentBranch(newNode.parentNode, newNode);
+            }
+            //this.#buildParentBranch(newNode.parentNode, newNode);
+         } else if (stretchDirection == -1 && newNode.isLeftChild) {
+            console.log("stretch", newNode.value, "to the left");
+            newNode.setPosition("calc(" + newNode.left + " - " + 3 + "vw)", newNode.top);
+            if (newNode.parentNode) {
+               newNode.parentBranch.remove();
+               newNode.parentBranch = NaN;
+               this.#buildParentBranch(newNode.parentNode, newNode);
+            }
+            //this.#buildParentBranch(newNode.parentNode, newNode);
+         }
+      }
+   }
+
+   stretchDiffDirectionAncestorBranches(newNode, stretchDirection) {
+      if (newNode.parentBranch) {
+         this.stretchDiffDirectionAncestorBranches(newNode.parentNode, stretchDirection);
+         if (stretchDirection == 1 && newNode.isLeftChild) {
+            console.log("stretch", newNode.value, "to the right");
+         } else if (stretchDirection == -1 && newNode.isRightChild) {
+            console.log("stretch", newNode.value, "to the left");
+         }
+      }
+   }
+
+   thereIsDiffDirectionAncestorBranch(newNode, stretchDirection) {
+      if (!newNode) {
+         return false;
+      } else {
+         if (newNode.isLeftChild && stretchDirection == 1) {
+            return true;
+         } else if (newNode.isRightChild && stretchDirection == -1) {
+            return true;
+         } else {
+            return this.thereIsDiffDirectionAncestorBranch(newNode.parentNode, stretchDirection);
+         }
+      }
    }
 
    addChild(newChild, level, previousBranchDirection) {
@@ -19,12 +72,17 @@ class BinaryTreeNode {
       if (newChild.value < this.value) {
          // and left child doesn't exist
          if (!this.leftChild) {
+            // console.log(this.thereIsDiffDirectionAncestorBranch(this, -1));
+            // this.stretchSameDirectionAncestorBranches(this, -1);
             if (previousBranchDirection <= 0) {
+               // parent coming fromt the left
                newChild.setPosition(
                   "calc(" + this.left + " - " + 6 + "vw)",
                   "calc(" + this.top + " + " + 3 + "vw)"
                );
-            } else {
+            }
+            // parent coming from the right
+            else {
                newChild.setPosition(
                   "calc(" + this.left + " - " + 3 + "vw)",
                   "calc(" + this.top + " + " + 3 + "vw)"
@@ -32,6 +90,8 @@ class BinaryTreeNode {
             }
             newChild.parentNode = this;
             this.leftChild = newChild;
+            newChild.isLeftChild = true;
+            newChild.isRightChild = false;
             this.#buildParentBranch(this, newChild);
             this.#updateInnerFamilyZIndexes(level, newChild);
          }
@@ -44,6 +104,9 @@ class BinaryTreeNode {
       if (newChild.value > this.value) {
          // and right child doesn't exist
          if (!this.rightChild) {
+            // keep on going right
+            // console.log(this.thereIsDiffDirectionAncestorBranch(this, 1));
+            // this.stretchSameDirectionAncestorBranches(this, 1);
             if (previousBranchDirection >= 0) {
                newChild.setPosition(
                   "calc(" + this.left + " + " + 6 + "vw)",
@@ -57,6 +120,8 @@ class BinaryTreeNode {
             }
             newChild.parentNode = this;
             this.rightChild = newChild;
+            newChild.isLeftChild = false;
+            newChild.isRightChild = true;
             this.#buildParentBranch(this, newChild);
             this.#updateInnerFamilyZIndexes(level, newChild);
          }
@@ -87,28 +152,24 @@ class BinaryTreeNode {
       const currentNodeLeft = this.#getRawValue(currentNode.label.style.left) + 0.5;
       const currentNodeTop = this.#getRawValue(currentNode.label.style.top) + 0.5;
       // calculate the length of the branch
-      const branchLength = Math.sqrt(
-         Math.pow(currentNodeLeft - parentNodeLeft, 2) + Math.pow(currentNodeTop - parentNodeTop, 2)
-      );
+      const deltaX = currentNodeLeft - parentNodeLeft;
+      const deltaY = currentNodeTop - parentNodeTop;
+      const branchLength = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
       currentNode.parentBranch.style.width = branchLength + "vw";
-      // calculate the angle of the branch
-      const numerator = parentNodeLeft * currentNodeLeft + parentNodeTop * currentNodeTop;
-      const denominator =
-         Math.sqrt(Math.pow(parentNodeLeft, 2) + Math.pow(parentNodeTop, 2)) *
-         Math.sqrt(Math.pow(currentNodeTop, 2) + Math.pow(currentNodeLeft, 2));
-      const fraction = numerator / denominator;
-      currentNode.parentBranch.style.transformOrigin = "center";
-      var angle = (Math.acos(fraction) * 180) / Math.PI;
+
+      // alculate the angle of the branch accurately
+      const angleInRadians = Math.atan2(deltaY, deltaX);
+
+      // convert the angle to degrees
+      var angle = (angleInRadians * 180) / Math.PI;
       // format the angle and apply the positioning of the branch based on which child it is
       // left child
       if (parentNodeLeft > currentNodeLeft) {
-         angle += 145;
          currentNode.parentBranch.style.left = currentNode.label.style.left;
          currentNode.parentBranch.style.top = currentNode.label.style.top;
       }
       // right child
       else {
-         angle += 30;
          currentNode.parentBranch.style.left = parentNode.label.style.left;
          currentNode.parentBranch.style.top = currentNode.label.style.top;
       }
