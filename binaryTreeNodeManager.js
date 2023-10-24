@@ -132,12 +132,16 @@ class BinaryTreeNodeManager {
          const leNode = searchOrder[index];
          // mark node as comparing
          leNode.label.style.borderColor = "yellow";
+         if (leNode.parentBranch) {
+            leNode.parentBranch.style.backgroundColor = "green";
+         }
          // wait
          setTimeout(() => {
             // check if it equals search value
             if (this.getSearchFieldValue() == leNode.value) {
                // mark as met
                leNode.label.style.borderColor = "green";
+               this.#enableSearchConfigurations();
             } else {
                // mark as not here
                leNode.label.style.borderColor = "red";
