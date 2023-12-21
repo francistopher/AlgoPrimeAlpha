@@ -1,4 +1,4 @@
-class GraphNode {
+class Node {
    constructor() {
       this.element = None;
       this.#createElement();
