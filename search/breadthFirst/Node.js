@@ -12,4 +12,8 @@ class MyNode {
       this.element.innerHTML = value;
       document.body.appendChild(this.element);
    }
+
+   removeFromDocument() {
+      this.element.remove();
+   }
 }
