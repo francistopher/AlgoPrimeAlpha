@@ -51,7 +51,7 @@ class BinaryTreeNodeManager {
       this.nodeCountSlider.type = "range";
       this.nodeCountSlider.value = 0;
       this.nodeCountSlider.min = "0";
-      this.nodeCountSlider.max = "20";
+      this.nodeCountSlider.max = "25";
       this.nodeCountSlider.style.accentColor = "black";
       document.body.appendChild(this.nodeCountSlider);
       this.nodeCountSlider.style.display = "inline";
