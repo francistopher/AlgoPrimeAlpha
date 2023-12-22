@@ -1,18 +1,18 @@
 class Graph {
-   /**
-    *
-    * @param {boolean} buildAdjacencyMatrix builds an adjacency matrix by default
-    * if false build an adjacency list instead
-    */
    constructor() {
       console.log("Hello World! This is Graph!");
       this.nodes = [];
+      this.values = [];
       this.nodesCountSlider = NaN;
       this.nodesCountLabel = NaN;
       this.#setNodesCountLabel();
       this.#setNodesCountSlider();
+      this.#nodesGenerator();
    }
 
+   /**
+    * Creates the nodes count label
+    */
    #setNodesCountLabel() {
       this.nodesCountLabel = document.createElement("label");
       this.nodesCountLabel.innerHTML = "Nodes Count Slider: ";
@@ -20,26 +20,52 @@ class Graph {
       document.body.appendChild(this.nodesCountLabel);
    }
 
+   /**
+    * Creates the nodes count slider
+    */
    #setNodesCountSlider() {
-      this.nodeCountSlider = document.createElement("input");
-      this.nodeCountSlider.type = "range";
-      this.nodeCountSlider.value = 0;
-      this.nodeCountSlider.min = "0";
-      this.nodeCountSlider.max = "25";
-      this.nodeCountSlider.style.accentColor = "black";
-      this.nodeCountSlider.style.display = "inline-block";
-      document.body.appendChild(this.nodeCountSlider);
+      this.nodesCountSlider = document.createElement("input");
+      this.nodesCountSlider.type = "range";
+      this.nodesCountSlider.value = 0;
+      this.nodesCountSlider.min = "0";
+      this.nodesCountSlider.max = "25";
+      this.nodesCountSlider.style.accentColor = "black";
+      this.nodesCountSlider.style.display = "inline-block";
+      document.body.appendChild(this.nodesCountSlider);
    }
 
-   #setPathsCountLabel() {}
+   /**
+    * Generates a new value, a value not in values
+    */
+   #addNewValue() {
+      var potentiallyNewRandomValue;
+      do {
+         potentiallyNewRandomValue = Math.ceil(Math.random() * 99 + 1);
+      } while (this.values.includes(potentiallyNewRandomValue));
+      this.values.push(potentiallyNewRandomValue);
+      return potentiallyNewRandomValue;
+   }
 
-   #setPathsCountSlider() {}
+   /**
+    * Generates a new node, based on the nodes count slider value
+    */
+   #addNewNode() {
+      if (this.nodes.length < this.nodesCountSlider.value) {
+         var newNode = new MyNode(this.#addNewValue());
+         this.nodes.push(newNode);
+         console.log(this.values);
+         if (this.nodes.length != this.nodesCountSlider.value) {
+            this.#addNewNode();
+         }
+      }
+   }
 
-   #addNodesValues() {}
-
-   #removeNodesValues() {}
-
-   #addPathsValues() {}
-
-   #removePathsValues() {}
+   /**
+    * Creates an action listener to add a new node based on the slider value
+    */
+   #nodesGenerator() {
+      this.nodesCountSlider.addEventListener("input", () => {
+         this.#addNewNode();
+      });
+   }
 }
