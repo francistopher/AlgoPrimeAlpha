@@ -8,9 +8,16 @@ class Graph {
       console.log("Hello World! This is Graph!");
       this.nodes = [];
       this.nodesCountSlider = NaN;
+      this.nodesSliderLabel = NaN;
+      this.#setNodesCountLabel();
    }
 
-   #setNodesCountLabel() {}
+   #setNodesCountLabel() {
+      this.nodesSliderLabel = document.createElement("label");
+      this.nodesSliderLabel.innerHTML = "Nodes Count Slider: ";
+      this.nodesSliderLabel.style.display = "inline";
+      document.body.appendChild(this.nodesSliderLabel);
+   }
 
    #setNodesCountSlider() {}
 
