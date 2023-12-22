@@ -8,6 +8,7 @@ class Graph {
       this.#setNodesCountLabel();
       this.#setNodesCountSlider();
       this.#nodesGenerator();
+      this.#nodesDegenerator();
    }
 
    /**
@@ -61,11 +62,34 @@ class Graph {
    }
 
    /**
+    * Deteriorates a node, based on the nodes count slider value
+    */
+   #removeNewestNode() {
+      if (this.nodes.length > this.nodesCountSlider.value) {
+         var removedNode = this.nodes.pop();
+         removedNode.removeFromDocument();
+         this.values.pop();
+         if (this.nodes.length != this.nodesCountSlider.value) {
+            this.#removeNewestNode();
+         }
+      }
+   }
+
+   /**
     * Creates an action listener to add a new node based on the slider value
     */
    #nodesGenerator() {
       this.nodesCountSlider.addEventListener("input", () => {
          this.#addNewNode();
+      });
+   }
+
+   /**
+    * Creates an action listener to remove the newest node based on the slider value
+    */
+   #nodesDegenerator() {
+      this.nodesCountSlider.addEventListener("input", () => {
+         this.#removeNewestNode();
       });
    }
 }
