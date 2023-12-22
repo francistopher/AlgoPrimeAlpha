@@ -9,6 +9,7 @@ class MyNode {
       this.element = document.createElement("LABEL");
       this.element.id = "node";
       this.element.value = value;
+      this.element.innerHTML = value;
       document.body.appendChild(this.element);
    }
 }
