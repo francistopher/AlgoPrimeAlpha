@@ -54,11 +54,20 @@ class Graph {
       if (this.nodes.length < this.nodesCountSlider.value) {
          var newNode = new MyNode(this.#addNewValue());
          this.nodes.push(newNode);
-         console.log(this.values);
+         this.#randomlyPlaceNode(newNode);
          if (this.nodes.length != this.nodesCountSlider.value) {
             this.#addNewNode();
          }
       }
+   }
+
+   /**
+    * Randomly plots new node and assures it doesn't intersect with any other node
+    */
+   #randomlyPlaceNode(newNode) {
+      const xPos = Math.floor(Math.random() * 93) + 3;
+      const yPos = Math.floor(Math.random() * 93) + 3;
+      newNode.reposition(xPos + "vw", yPos + "vh");
    }
 
    /**
