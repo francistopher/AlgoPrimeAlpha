@@ -20,20 +20,20 @@ class MyNode {
    }
 
    reposition(x, y) {
-      console.log(typeof x, typeof y);
       this.element.style.position = "absolute";
       if (typeof x === Number) {
          this.element.style.left = x + "vw";
-         console.log(x);
-         // console.log(x.substring(0, -2));
+         this.x = x;
       } else {
          this.element.style.left = x;
+         this.x = parseInt(x.substring(0, x.length - 2), 10);
       }
       if (typeof y === Number) {
          this.element.style.top = y + "vh";
-         // console.log(y.substring(0, -2));
+         this.y = y;
       } else {
          this.element.style.top = y;
+         this.y = parseInt(y.substring(0, y.length - 2), 10);
       }
    }
 }
