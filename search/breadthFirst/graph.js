@@ -53,8 +53,8 @@ class Graph {
    #addNewNode() {
       if (this.nodes.length < this.nodesCountSlider.value) {
          var newNode = new MyNode(this.#addNewValue());
-         this.nodes.push(newNode);
          this.#randomlyPlaceNode(newNode);
+         this.nodes.push(newNode);
          if (this.nodes.length != this.nodesCountSlider.value) {
             this.#addNewNode();
          }
@@ -65,9 +65,29 @@ class Graph {
     * Randomly plots new node and assures it doesn't intersect with any other node
     */
    #randomlyPlaceNode(newNode) {
-      const xPos = Math.floor(Math.random() * 93) + 3;
-      const yPos = Math.floor(Math.random() * 93) + 3;
-      newNode.reposition(xPos + "vw", yPos + "vh");
+      const xPos = Math.floor(Math.random() * 91) + 3;
+      const yPos = Math.floor(Math.random() * 81) + 13;
+      if (this.#isTooClose(xPos, yPos)) {
+         //console.log("too closeee");
+         this.#randomlyPlaceNode(newNode);
+      } else {
+         newNode.reposition(xPos + "vw", yPos + "vh");
+      }
+   }
+
+   /**
+    * Returns boolean whether or not new node is too close from other nodes
+    */
+   #isTooClose(x, y) {
+      for (var i = 0; i < this.nodes.length; i++) {
+         const node = this.nodes[i];
+         const distance = Math.ceil(Math.sqrt(Math.pow(x - node.x, 2) + Math.pow(y - node.y, 2)));
+         if (distance < 7) {
+            //console.log("too close");
+            return true;
+         }
+      }
+      return false;
    }
 
    /**
