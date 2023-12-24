@@ -2,8 +2,9 @@ class Graph {
    constructor() {
       console.log("Hello World! This is Graph!");
       this.nodes = [];
-      this.paths = [];
       this.values = [];
+      this.paths = [];
+      this.allNodePaths = new Map();
       this.nodesCountSlider = NaN;
       this.nodesCountLabel = NaN;
       this.#setNodesCountLabel();
@@ -66,6 +67,7 @@ class Graph {
       newPath.style.zIndex = "1";
       document.body.appendChild(newPath);
       this.paths.push(newPath);
+      return newPath;
    }
 
    /**
@@ -90,12 +92,40 @@ class Graph {
          this.nodes.push(newNode);
          const nodesSize = this.nodes.length;
          if (nodesSize > 1) {
-            this.#generateNewPath(this.nodes[nodesSize - 2], this.nodes[nodesSize - 1]);
-            console.log(this.paths);
+            // create path between current and subsequent node
+            const nodeA = this.nodes[nodesSize - 2];
+            const nodeB = this.nodes[nodesSize - 1];
+            this.#createNewPath(nodeA, nodeB);
+            // store path node relationship
          }
          if (this.nodes.length != this.nodesCountSlider.value) {
             this.#addNewNode();
          }
+      }
+   }
+
+   /**
+    * Generates a new path between the two given nodes
+    */
+
+   #createNewPath(nodeA, nodeB) {
+      // build new path
+      const newPath = this.#generateNewPath(nodeA, nodeB);
+      // search for node in allNodePaths to see if node is connected to a path already
+      // thus add it to the paths it's connected to
+      if (this.allNodePaths.get(nodeA)) {
+         this.allNodePaths.get(nodeA).push(newPath);
+      } else {
+         const nodeAPaths = [];
+         nodeAPaths.push(newPath);
+         this.allNodePaths.set(nodeA, nodeAPaths);
+      }
+      if (this.allNodePaths[nodeB]) {
+         this.allNodePaths[nodeB].push(newPath);
+      } else {
+         const nodeBPaths = [];
+         nodeBPaths.push(newPath);
+         this.allNodePaths.set(nodeB, nodeBPaths);
       }
    }
 
@@ -133,13 +163,40 @@ class Graph {
     */
    #removeNewestNode() {
       if (this.nodes.length > this.nodesCountSlider.value) {
+         // remove the node and path(s) relations
          var removedNode = this.nodes.pop();
+         this.#removePath(removedNode);
          removedNode.removeFromDocument();
          this.values.pop();
+         // rerun if function is lagging behind user
          if (this.nodes.length != this.nodesCountSlider.value) {
             this.#removeNewestNode();
          }
       }
+   }
+
+   /**
+    * Removes the path associated to the removed node
+    * NOTE: the last node remaining will still be associated to its previous path
+    */
+   #removePath(node) {
+      // iterate through paths to remove them
+      const nodePaths = this.allNodePaths.get(node);
+      // remove paths from document
+      for (var i = 0; i < nodePaths.length; i++) {
+         const nodePath = nodePaths[i];
+         nodePath.remove();
+         // remove path from list NOTE: O(n)
+         for (var j = 0; j < this.paths.length; j++) {
+            const searchedNodePath = this.paths[j];
+            if (searchedNodePath === nodePath) {
+               searchedNodePath.remove();
+               this.paths.splice(j, 1);
+            }
+         }
+      }
+      // remove node from correlations
+      this.allNodePaths.delete(node);
    }
 
    /**
