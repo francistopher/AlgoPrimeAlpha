@@ -117,7 +117,7 @@ class Graph {
          console.log(nodePaths);
          for (var i = 0; i < nodePaths.length; i++) {
             const nodePath = nodePaths[i];
-            nodePath.style.backgroundColor = "green";
+            nodePath.style.backgroundColor = "magenta";
          }
       });
 
