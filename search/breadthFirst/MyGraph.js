@@ -99,7 +99,7 @@ class Graph {
             // store path node relationship
          }
          if (nodesSize > 3) {
-            if (Math.random() > 0.33) {
+            if (Math.random() > 0.42) {
                // console.log("CREATED");
                this.#createAdditionalPath(newNode);
             }
@@ -116,10 +116,8 @@ class Graph {
    #createAdditionalPath() {
       const nodeA = this.#getRandomlySelectedNode();
       var nodeB = this.#getRandomlySelectedNode();
-      // may get stuck searching hypothetically
-      var searchedCount = 0;
       // continue searching for node if they have a common path or are the same
-      while ((nodeA === nodeB || this.#haveCommonPath(nodeA, nodeB)) && searchedCount < 5) {
+      while (nodeA === nodeB || this.#haveCommonPath(nodeA, nodeB)) {
          console.log("SEARCHING");
          nodeB = this.#getRandomlySelectedNode();
          searchedCount += 1;
@@ -199,7 +197,7 @@ class Graph {
       for (var i = 0; i < this.nodes.length; i++) {
          const node = this.nodes[i];
          const distance = Math.ceil(Math.sqrt(Math.pow(x - node.x, 2) + Math.pow(y - node.y, 2)));
-         if (distance < 10) {
+         if (distance < 13) {
             return true;
          }
       }
