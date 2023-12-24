@@ -5,6 +5,7 @@ class Graph {
       this.values = [];
       this.paths = [];
       this.allNodePaths = new Map();
+      this.allPathNodes = new Map();
       this.nodesCountSlider = NaN;
       this.nodesCountLabel = NaN;
       this.#setNodesCountLabel();
@@ -95,7 +96,8 @@ class Graph {
             // create path between current and subsequent node
             const nodeA = this.nodes[nodesSize - 2];
             const nodeB = this.nodes[nodesSize - 1];
-            this.#createNewPath(nodeA, nodeB);
+            const newPath = this.#createNewPath(nodeA, nodeB);
+            this.#createPathToNodes(newPath, nodeA, nodeB);
             // store path node relationship
          }
          if (nodesSize > 3) {
@@ -109,6 +111,23 @@ class Graph {
          }
          this.#addPathHighlighting(newNode);
       }
+   }
+
+   #createPathToNodes(path, nodeA, nodeB) {
+      const nodes = [];
+      nodes.push(nodeA);
+      nodes.push(nodeB);
+      this.allPathNodes[path] = nodes;
+      path.addEventListener("mouseenter", () => {
+         path.style.backgroundColor = "magenta";
+         nodeA.getElement().style.borderColor = "magenta";
+         nodeB.getElement().style.borderColor = "magenta";
+      });
+      path.addEventListener("mouseleave", () => {
+         path.style.backgroundColor = "black";
+         nodeA.getElement().style.borderColor = "black";
+         nodeB.getElement().style.borderColor = "black";
+      });
    }
 
    #addPathHighlighting(newNode) {
@@ -151,7 +170,8 @@ class Graph {
          console.log("SEARCHING");
          nodeB = this.#getRandomlySelectedNode();
       }
-      this.#createNewPath(nodeA, nodeB);
+      const newPath = this.#createNewPath(nodeA, nodeB);
+      this.#createPathToNodes(newPath, nodeA, nodeB);
       // console.log("ADDITIONAL PATH");
    }
 
@@ -202,6 +222,7 @@ class Graph {
          nodeBPaths.push(newPath);
          this.allNodePaths.set(nodeB, nodeBPaths);
       }
+      return newPath;
    }
 
    /**
