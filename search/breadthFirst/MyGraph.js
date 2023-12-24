@@ -99,8 +99,8 @@ class Graph {
             // store path node relationship
          }
          if (nodesSize > 3) {
-            if (Math.random() > 0.5) {
-               console.log("CREATED");
+            if (Math.random() > 0.33) {
+               // console.log("CREATED");
                this.#createAdditionalPath(newNode);
             }
          }
@@ -120,7 +120,7 @@ class Graph {
          nodeB = this.#getRandomlySelectedNode();
       }
       this.#createNewPath(nodeA, nodeB);
-      console.log("ADDITIONAL PATH");
+      // console.log("ADDITIONAL PATH");
    }
 
    /**
