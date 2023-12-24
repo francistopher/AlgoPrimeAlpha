@@ -56,7 +56,7 @@ class Graph {
       newPath.style.backgroundColor = "black";
       newPath.style.position = "absolute";
       newPath.style.width = distance + "vh";
-      newPath.style.height = "1vh";
+      newPath.style.height = "0.5vh";
       newPath.style.left = nodeA.x + "vh";
       newPath.style.top = nodeA.y + "vh";
       newPath.style.transformOrigin = "top left";
