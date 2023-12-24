@@ -114,19 +114,28 @@ class Graph {
    #addPathHighlighting(newNode) {
       newNode.getElement().addEventListener("mouseenter", () => {
          const nodePaths = this.allNodePaths.get(newNode);
-         console.log(nodePaths);
+         // console.log(nodePaths);
+         for (var j = 0; j < this.paths.length; j++) {
+            const path = this.paths[j];
+            path.style.zIndex = "1";
+         }
          for (var i = 0; i < nodePaths.length; i++) {
             const nodePath = nodePaths[i];
             nodePath.style.backgroundColor = "magenta";
+            nodePath.style.zIndex = "2";
          }
       });
 
       newNode.getElement().addEventListener("mouseleave", () => {
          const nodePaths = this.allNodePaths.get(newNode);
-         console.log(nodePaths);
+         // console.log(nodePaths);
          for (var i = 0; i < nodePaths.length; i++) {
             const nodePath = nodePaths[i];
             nodePath.style.backgroundColor = "black";
+         }
+         for (var j = 0; j < this.paths.length; j++) {
+            const path = this.paths[j];
+            path.style.zIndex = "1";
          }
       });
    }
