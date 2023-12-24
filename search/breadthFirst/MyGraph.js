@@ -115,12 +115,33 @@ class Graph {
     */
    #createAdditionalPath() {
       const nodeA = this.#getRandomlySelectedNode();
-      const nodeB = this.#getRandomlySelectedNode();
-      while (nodeA === nodeB) {
+      var nodeB = this.#getRandomlySelectedNode();
+      // may get stuck searching hypothetically
+      var searchedCount = 0;
+      // continue searching for node if they have a common path or are the same
+      while ((nodeA === nodeB || this.#haveCommonPath(nodeA, nodeB)) && searchedCount < 5) {
+         console.log("SEARCHING");
          nodeB = this.#getRandomlySelectedNode();
+         searchedCount += 1;
       }
       this.#createNewPath(nodeA, nodeB);
       // console.log("ADDITIONAL PATH");
+   }
+
+   /**
+    * Determines if nodes have a common path
+    */
+   #haveCommonPath(nodeA, nodeB) {
+      const paths1 = this.allNodePaths.get(nodeA);
+      var paths2 = this.allNodePaths.get(nodeB);
+      for (const path1 of paths1) {
+         for (const path2 of paths2) {
+            if (path1 === path2) {
+               return true; // Common path found
+            }
+         }
+      }
+      return false; // No common path found
    }
 
    /**
@@ -178,7 +199,7 @@ class Graph {
       for (var i = 0; i < this.nodes.length; i++) {
          const node = this.nodes[i];
          const distance = Math.ceil(Math.sqrt(Math.pow(x - node.x, 2) + Math.pow(y - node.y, 2)));
-         if (distance < 7) {
+         if (distance < 10) {
             return true;
          }
       }
