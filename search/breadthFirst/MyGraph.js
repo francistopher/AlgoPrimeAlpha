@@ -99,15 +99,36 @@ class Graph {
             // store path node relationship
          }
          if (nodesSize > 3) {
+            // create additional paths
             if (Math.random() > 0.42) {
-               // console.log("CREATED");
                this.#createAdditionalPath(newNode);
             }
          }
          if (this.nodes.length != this.nodesCountSlider.value) {
             this.#addNewNode();
          }
+         this.#addPathHighlighting(newNode);
       }
+   }
+
+   #addPathHighlighting(newNode) {
+      newNode.getElement().addEventListener("mouseenter", () => {
+         const nodePaths = this.allNodePaths.get(newNode);
+         console.log(nodePaths);
+         for (var i = 0; i < nodePaths.length; i++) {
+            const nodePath = nodePaths[i];
+            nodePath.style.backgroundColor = "green";
+         }
+      });
+
+      newNode.getElement().addEventListener("mouseleave", () => {
+         const nodePaths = this.allNodePaths.get(newNode);
+         console.log(nodePaths);
+         for (var i = 0; i < nodePaths.length; i++) {
+            const nodePath = nodePaths[i];
+            nodePath.style.backgroundColor = "black";
+         }
+      });
    }
 
    /**
@@ -120,7 +141,6 @@ class Graph {
       while (nodeA === nodeB || this.#haveCommonPath(nodeA, nodeB)) {
          console.log("SEARCHING");
          nodeB = this.#getRandomlySelectedNode();
-         searchedCount += 1;
       }
       this.#createNewPath(nodeA, nodeB);
       // console.log("ADDITIONAL PATH");
@@ -166,8 +186,8 @@ class Graph {
          nodeAPaths.push(newPath);
          this.allNodePaths.set(nodeA, nodeAPaths);
       }
-      if (this.allNodePaths[nodeB]) {
-         this.allNodePaths[nodeB].push(newPath);
+      if (this.allNodePaths.get(nodeB)) {
+         this.allNodePaths.get(nodeB).push(newPath);
       } else {
          const nodeBPaths = [];
          nodeBPaths.push(newPath);
@@ -228,9 +248,11 @@ class Graph {
    #removePath(node) {
       // iterate through paths to remove them
       const nodePaths = this.allNodePaths.get(node);
+
       // remove paths from document
       for (var i = 0; i < nodePaths.length; i++) {
          const nodePath = nodePaths[i];
+
          nodePath.remove();
          // remove path from list NOTE: O(n)
          for (var j = 0; j < this.paths.length; j++) {
