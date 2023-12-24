@@ -20,9 +20,8 @@ class MyNode {
    }
 
    reposition(x, y) {
-      this.element.style.position = "absolute";
       if (typeof x === Number) {
-         this.element.style.left = x + "vw";
+         this.element.style.left = x + "vh";
          this.x = x;
       } else {
          this.element.style.left = x;
