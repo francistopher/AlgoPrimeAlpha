@@ -1,4 +1,5 @@
 .MyNode {
+   position: absolute;
    display: inline-flex;
    align-items: center;
    justify-content: center;
@@ -9,4 +10,6 @@
    border-color: black;
    border-width: 0.5vh;
    border-radius: 5vh;
+   z-index: 100;
+   background-color: white;
 }
