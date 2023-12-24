@@ -98,10 +98,37 @@ class Graph {
             this.#createNewPath(nodeA, nodeB);
             // store path node relationship
          }
+         if (nodesSize > 3) {
+            if (Math.random() > 0.5) {
+               console.log("CREATED");
+               this.#createAdditionalPath(newNode);
+            }
+         }
          if (this.nodes.length != this.nodesCountSlider.value) {
             this.#addNewNode();
          }
       }
+   }
+
+   /**
+    * Generates additional paths exceeding the number of nodes
+    */
+   #createAdditionalPath() {
+      const nodeA = this.#getRandomlySelectedNode();
+      const nodeB = this.#getRandomlySelectedNode();
+      while (nodeA === nodeB) {
+         nodeB = this.#getRandomlySelectedNode();
+      }
+      this.#createNewPath(nodeA, nodeB);
+      console.log("ADDITIONAL PATH");
+   }
+
+   /**
+    * Randomly select node
+    */
+   #getRandomlySelectedNode() {
+      const randomIndex = Math.floor(Math.random() * this.nodes.length);
+      return this.nodes[randomIndex];
    }
 
    /**
