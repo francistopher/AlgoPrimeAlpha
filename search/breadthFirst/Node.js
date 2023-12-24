@@ -7,8 +7,12 @@ class MyNode {
       this.#createElement(value);
    }
 
+   getElement() {
+      return this.element;
+   }
+
    #createElement(value) {
-      this.element = document.createElement("LABEL");
+      this.element = document.createElement("button");
       this.element.classList.add("MyNode");
       this.element.value = value;
       this.element.innerHTML = value;
