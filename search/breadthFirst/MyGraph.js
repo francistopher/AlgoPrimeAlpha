@@ -109,42 +109,75 @@ class Graph {
          if (this.nodes.length != this.nodesCountSlider.value) {
             this.#addNewNode();
          }
-         this.#addPathHighlighting(newNode);
+         this.#addNodeHighlighting(newNode);
+         this.#addNodeDraggability(newNode.getElement());
       }
    }
 
+   /**
+    * Enables the node to be draggable
+    * @param {MyNode} newNode
+    */
+   #addNodeDraggability(newNode) {
+      let isDragging = false;
+      let offsetX, offsetY;
+      // when element is selected track its offset
+      newNode.addEventListener("mousedown", function (event) {
+         isDragging = true;
+         offsetX = event.clientX - this.getBoundingClientRect().left;
+         offsetY = event.clientY - this.getBoundingClientRect().top;
+      });
+      // reposition relative to offset
+      document.addEventListener("mousemove", function (event) {
+         if (isDragging) {
+            const x = event.clientX - offsetX;
+            const y = event.clientY - offsetY;
+            // calculate vh, 120 to recorrect
+            newNode.style.left = `${
+               ((x / window.screen.width) * 120 * window.screen.width) / window.screen.height
+            }vh`;
+            newNode.style.top = `${(y / window.screen.height) * 120}vh`;
+         }
+      });
+      // cuts the repositioning from happening
+      document.addEventListener("mouseup", function () {
+         console.log("UP");
+         isDragging = false;
+      });
+   }
+
+   /**
+    * Stores the relation of path to nodes in a map
+    * @param {Button} path
+    * @param {MyNode} nodeA
+    * @param {MyNode} nodeB
+    */
    #createPathToNodes(path, nodeA, nodeB) {
+      // store the nodes sharing a path
       const nodes = [];
       nodes.push(nodeA);
       nodes.push(nodeB);
       this.allPathNodes[path] = nodes;
-      path.addEventListener("mouseenter", () => {
-         path.style.backgroundColor = "magenta";
-         nodeA.getElement().style.borderColor = "magenta";
-         nodeB.getElement().style.borderColor = "magenta";
-      });
-      path.addEventListener("mouseleave", () => {
-         path.style.backgroundColor = "black";
-         nodeA.getElement().style.borderColor = "black";
-         nodeB.getElement().style.borderColor = "black";
-      });
+      this.#addPathHighlighting(path, nodeA, nodeB);
    }
 
-   #addPathHighlighting(newNode) {
+   #addNodeHighlighting(newNode) {
+      // move highlighted path on top of other paths
       newNode.getElement().addEventListener("mouseenter", () => {
          const nodePaths = this.allNodePaths.get(newNode);
-         // console.log(nodePaths);
+         // force every path to be at the same level
          for (var j = 0; j < this.paths.length; j++) {
             const path = this.paths[j];
             path.style.zIndex = "1";
          }
+         // force the paths of the node to be above all other paths
          for (var i = 0; i < nodePaths.length; i++) {
             const nodePath = nodePaths[i];
             nodePath.style.backgroundColor = "magenta";
             nodePath.style.zIndex = "2";
          }
       });
-
+      // have every path return to the same level
       newNode.getElement().addEventListener("mouseleave", () => {
          const nodePaths = this.allNodePaths.get(newNode);
          // console.log(nodePaths);
@@ -156,6 +189,27 @@ class Graph {
             const path = this.paths[j];
             path.style.zIndex = "1";
          }
+      });
+   }
+
+   /**
+    * Enables the path and nodes associated to be highlighted when mouse hovers over path
+    * @param {Label} path
+    * @param {MyNode} nodeA
+    * @param {MyNode} nodeB
+    */
+   #addPathHighlighting(path, nodeA, nodeB) {
+      // highlight path and nodes when hovered over path
+      path.addEventListener("mouseenter", () => {
+         path.style.backgroundColor = "magenta";
+         nodeA.getElement().style.borderColor = "magenta";
+         nodeB.getElement().style.borderColor = "magenta";
+      });
+      // unhighlight path and nodes when leaving path
+      path.addEventListener("mouseleave", () => {
+         path.style.backgroundColor = "black";
+         nodeA.getElement().style.borderColor = "black";
+         nodeB.getElement().style.borderColor = "black";
       });
    }
 
