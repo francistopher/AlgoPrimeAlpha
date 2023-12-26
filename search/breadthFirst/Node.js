@@ -24,14 +24,14 @@ class MyNode {
    }
 
    reposition(x, y) {
-      if (typeof x === Number) {
+      if (typeof x === "number") {
          this.element.style.left = x + "vh";
          this.x = x;
       } else {
          this.element.style.left = x;
          this.x = parseInt(x.substring(0, x.length - 2), 10);
       }
-      if (typeof y === Number) {
+      if (typeof y === "number") {
          this.element.style.top = y + "vh";
          this.y = y;
       } else {
