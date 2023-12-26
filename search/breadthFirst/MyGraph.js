@@ -141,7 +141,7 @@ class Graph {
       });
       // cuts the repositioning from happening
       document.addEventListener("mouseup", function () {
-         console.log("UP");
+         // console.log("UP");
          isDragging = false;
       });
    }
@@ -169,7 +169,7 @@ class Graph {
       const nodes = this.allPathNodes.get(path);
       var nodeA = nodes[0];
       var nodeB = nodes[1];
-      console.log(draggedNode, nodeA, nodeB);
+      // console.log(draggedNode, nodeA, nodeB);
       // get difference in x and y
       const dx = nodeB.x - nodeA.x;
       const dy = nodeB.y - nodeA.y;
@@ -264,7 +264,7 @@ class Graph {
       var nodeB = this.#getRandomlySelectedNode();
       // continue searching for node if they have a common path or are the same
       while (nodeA === nodeB || this.#haveCommonPath(nodeA, nodeB)) {
-         console.log("SEARCHING");
+         // console.log("SEARCHING");
          nodeB = this.#getRandomlySelectedNode();
       }
       const newPath = this.#createNewPath(nodeA, nodeB);
