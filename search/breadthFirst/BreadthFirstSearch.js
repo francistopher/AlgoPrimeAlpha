@@ -9,9 +9,11 @@ class BreadthFirstSearch extends Graph {
       this.#createSearchLabel();
       this.#createTextField();
       this.#createSearchInstructions();
+      // actual material used to search
       this.numberToSearch;
-      this.qualifiedNodes;
+      this.nodesThatAreReady;
       this.#rememberNumberToSearch();
+      //this.#setNodesAsReady();
    }
 
    #createSearchInstructions() {
@@ -46,8 +48,9 @@ class BreadthFirstSearch extends Graph {
 
    #rememberNumberToSearch() {
       // get number to search from
-      this.searchField.addEventListener("input", () => {
+      this.searchField.addEventListener("blur", () => {
          this.numberToSearch = this.searchField.value;
+         //console.log(this.numberToSearch);
       });
    }
 }
