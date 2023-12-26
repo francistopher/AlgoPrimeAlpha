@@ -97,8 +97,8 @@ class Graph {
             const nodeA = this.nodes[nodesSize - 2];
             const nodeB = this.nodes[nodesSize - 1];
             const newPath = this.#createNewPath(nodeA, nodeB);
+            // store path nodes relationship
             this.#createPathToNodes(newPath, nodeA, nodeB);
-            // store path node relationship
          }
          if (nodesSize > 3) {
             // create additional paths
@@ -106,11 +106,11 @@ class Graph {
                this.#createAdditionalPath(newNode);
             }
          }
+         this.#addNodeHighlighting(newNode);
+         this.#addNodeDraggability(newNode);
          if (this.nodes.length != this.nodesCountSlider.value) {
             this.#addNewNode();
          }
-         this.#addNodeHighlighting(newNode);
-         this.#addNodeDraggability(newNode.getElement());
       }
    }
 
@@ -122,21 +122,21 @@ class Graph {
       let isDragging = false;
       let offsetX, offsetY;
       // when element is selected track its offset
-      newNode.addEventListener("mousedown", function (event) {
+      newNode.getElement().addEventListener("mousedown", function (event) {
          isDragging = true;
          offsetX = event.clientX - this.getBoundingClientRect().left;
          offsetY = event.clientY - this.getBoundingClientRect().top;
       });
       // reposition relative to offset
-      document.addEventListener("mousemove", function (event) {
+      document.addEventListener("mousemove", (event) => {
          if (isDragging) {
-            const x = event.clientX - offsetX;
-            const y = event.clientY - offsetY;
+            const x =
+               (((event.clientX - offsetX) / window.screen.width) * 120 * window.screen.width) /
+               window.screen.height;
+            const y = ((event.clientY - offsetY) / window.screen.height) * 120;
             // calculate vh, 120 to recorrect
-            newNode.style.left = `${
-               ((x / window.screen.width) * 120 * window.screen.width) / window.screen.height
-            }vh`;
-            newNode.style.top = `${(y / window.screen.height) * 120}vh`;
+            newNode.reposition(x, y);
+            this.#updateNodePathsPositions(newNode);
          }
       });
       // cuts the repositioning from happening
@@ -144,6 +144,49 @@ class Graph {
          console.log("UP");
          isDragging = false;
       });
+   }
+
+   /**
+    * Updates the paths of the dragged node
+    * @param {MyNode} draggedNode
+    */
+   #updateNodePathsPositions(draggedNode) {
+      // get all paths of node
+      const paths = this.allNodePaths.get(draggedNode);
+      // update each path of the dragged node
+      for (var i = 0; i < paths.length; i++) {
+         var path = paths[i];
+         this.#updateNodePathPosition(draggedNode, path);
+      }
+   }
+
+   /**
+    *
+    * @param {MyNode} draggedNode
+    * @param {Label} path
+    */
+   #updateNodePathPosition(draggedNode, path) {
+      const nodes = this.allPathNodes.get(path);
+      var nodeA = nodes[0];
+      var nodeB = nodes[1];
+      console.log(draggedNode, nodeA, nodeB);
+      // get difference in x and y
+      const dx = nodeB.x - nodeA.x;
+      const dy = nodeB.y - nodeA.y;
+      // calculate distance
+      const distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+      // calculate angle of horizontal to path
+      const angleRadians = Math.atan2(dy, dx);
+      const angleDegrees = (angleRadians * 180) / Math.PI;
+      // update length
+      path.style.width = distance + "vh";
+      // update position relative to nodeA when it's the dragged node
+      if (draggedNode === nodeA) {
+         path.style.left = draggedNode.x + "vh";
+         path.style.top = draggedNode.y + "vh";
+      }
+      // otherwise maintain position and just rotate
+      path.style.transform = "rotate(" + angleDegrees + "deg)";
    }
 
    /**
@@ -157,7 +200,7 @@ class Graph {
       const nodes = [];
       nodes.push(nodeA);
       nodes.push(nodeB);
-      this.allPathNodes[path] = nodes;
+      this.allPathNodes.set(path, nodes);
       this.#addPathHighlighting(path, nodeA, nodeB);
    }
 
