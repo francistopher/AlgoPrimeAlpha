@@ -9,7 +9,6 @@ class BreadthFirstSearch extends Graph {
       this.#createSearchLabel();
       this.#createTextField();
       this.#createSearchInstructions();
-
       this.numberToSearch;
       this.qualifiedNodes;
       this.#rememberNumberToSearch();
