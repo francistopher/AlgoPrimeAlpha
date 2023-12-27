@@ -207,6 +207,7 @@ class Graph {
    #addNodeHighlighting(newNode) {
       // move highlighted path on top of other paths
       newNode.getElement().addEventListener("mouseenter", () => {
+         newNode.getElement().style.borderColor = "rgba(0, 0, 0, 0.33)";
          const nodePaths = this.allNodePaths.get(newNode);
          // force every path to be at the same level
          for (var j = 0; j < this.paths.length; j++) {
@@ -222,15 +223,12 @@ class Graph {
       });
       // have every path return to the same level
       newNode.getElement().addEventListener("mouseleave", () => {
+         newNode.getElement().style.borderColor = "rgba(0, 0, 0)";
          const nodePaths = this.allNodePaths.get(newNode);
          // console.log(nodePaths);
          for (var i = 0; i < nodePaths.length; i++) {
             const nodePath = nodePaths[i];
             nodePath.style.opacity = "1";
-         }
-         for (var j = 0; j < this.paths.length; j++) {
-            const path = this.paths[j];
-            path.style.zIndex = "1";
          }
       });
    }
