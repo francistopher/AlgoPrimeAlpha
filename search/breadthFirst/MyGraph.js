@@ -222,8 +222,11 @@ class Graph {
          }
       });
       // have every path return to the same level
+      const constantColors = ["yellow", "red", "green"];
       newNode.getElement().addEventListener("mouseleave", () => {
-         newNode.getElement().style.borderColor = "rgba(0, 0, 0)";
+         if (!constantColors.includes(newNode.getElement().style.borderColor)) {
+            newNode.getElement().style.borderColor = "rgba(0, 0, 0)";
+         }
          const nodePaths = this.allNodePaths.get(newNode);
          // console.log(nodePaths);
          for (var i = 0; i < nodePaths.length; i++) {
@@ -243,14 +246,14 @@ class Graph {
       // highlight path and nodes when hovered over path
       path.addEventListener("mouseenter", () => {
          path.style.opacity = "0.33";
-         nodeA.getElement().style.borderColor = "rgba(0, 0, 0, 0.33)";
-         nodeB.getElement().style.borderColor = "rgba(0, 0, 0, 0.33)";
+         nodeA.getElement().style.opacity = "rgba(0, 0, 0, 0.33)";
+         nodeB.getElement().style.opacity = "rgba(0, 0, 0, 0.33)";
       });
       // unhighlight path and nodes when leaving path
       path.addEventListener("mouseleave", () => {
          path.style.opacity = "1";
-         nodeA.getElement().style.borderColor = "black";
-         nodeB.getElement().style.borderColor = "black";
+         nodeA.getElement().style.opacity = "1";
+         nodeB.getElement().style.opacity = "1";
       });
    }
 
