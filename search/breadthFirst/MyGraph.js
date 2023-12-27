@@ -216,7 +216,7 @@ class Graph {
          // force the paths of the node to be above all other paths
          for (var i = 0; i < nodePaths.length; i++) {
             const nodePath = nodePaths[i];
-            nodePath.style.backgroundColor = "magenta";
+            nodePath.style.opacity = "0.33";
             nodePath.style.zIndex = "2";
          }
       });
@@ -226,7 +226,7 @@ class Graph {
          // console.log(nodePaths);
          for (var i = 0; i < nodePaths.length; i++) {
             const nodePath = nodePaths[i];
-            nodePath.style.backgroundColor = "black";
+            nodePath.style.opacity = "1";
          }
          for (var j = 0; j < this.paths.length; j++) {
             const path = this.paths[j];
