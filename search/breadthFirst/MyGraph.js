@@ -242,13 +242,13 @@ class Graph {
    #addPathHighlighting(path, nodeA, nodeB) {
       // highlight path and nodes when hovered over path
       path.addEventListener("mouseenter", () => {
-         path.style.backgroundColor = "magenta";
-         nodeA.getElement().style.borderColor = "magenta";
-         nodeB.getElement().style.borderColor = "magenta";
+         path.style.opacity = "0.33";
+         nodeA.getElement().style.borderColor = "rgba(0, 0, 0, 0.33)";
+         nodeB.getElement().style.borderColor = "rgba(0, 0, 0, 0.33)";
       });
       // unhighlight path and nodes when leaving path
       path.addEventListener("mouseleave", () => {
-         path.style.backgroundColor = "black";
+         path.style.opacity = "1";
          nodeA.getElement().style.borderColor = "black";
          nodeB.getElement().style.borderColor = "black";
       });
