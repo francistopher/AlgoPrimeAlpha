@@ -12,6 +12,10 @@ class BreadthFirstSearch extends Graph {
       // actual material used to search
       this.readyNodes;
       this.#setNodesAsReady();
+      // bfs
+      this.visited = [];
+      this.queue = [];
+      this.isSearching = false;
    }
 
    #createSearchInstructions() {
@@ -69,7 +73,9 @@ class BreadthFirstSearch extends Graph {
                   value = value.replace(/[0-9]/g, "");
                   // assures a number was entered
                   if (value.length == 0 && this.searchField.value.length != 0) {
-                     console.log(node.getElement().innerHTML);
+                     this.#deactivateSlider();
+                     this.queue.push(node);
+                     this.#bfs();
                   } else {
                      this.searchInstructions.innerHTML =
                         "ENTER A NUMBER ABOVE and double click on node to start search!";
@@ -78,5 +84,54 @@ class BreadthFirstSearch extends Graph {
             }
          }
       });
+   }
+
+   #deactivateSlider() {
+      this.nodesCountSlider.disabled = true;
+   }
+
+   #bfs() {
+      // there is no more nodes to visit
+      if (this.queue.length === 0) {
+         return;
+      }
+      // get the visiting node
+      const visitingNode = this.queue.shift();
+
+      // if the visiting node has not been visited
+      if (!this.visited.includes(visitingNode)) {
+         visitingNode.getElement().style.borderColor = "yellow";
+         this.visited.push(visitingNode);
+         this.#getNeighbors(visitingNode);
+
+         setTimeout(() => {
+            if (this.searchField.value === visitingNode.getElement().innerHTML) {
+               visitingNode.getElement().style.borderColor = "green";
+               return;
+            } else {
+               visitingNode.getElement().style.borderColor = "red";
+            }
+            this.#bfs();
+         }, 1000);
+      }
+      // continue bfs
+      else {
+         this.#bfs();
+      }
+   }
+
+   #getNeighbors(node) {
+      // get paths of node
+      const nodePaths = this.allNodePaths.get(node);
+      // get each neighbor through path
+      for (var i = 0; i < nodePaths.length; i++) {
+         const path = nodePaths[i];
+         const pathNodes = this.allPathNodes.get(path);
+         if (pathNodes[0] !== node && !this.visited.includes(pathNodes[0])) {
+            this.queue.push(pathNodes[0]);
+         } else if (pathNodes[1] !== node && !this.visited.includes(pathNodes[1])) {
+            this.queue.push(pathNodes[1]);
+         }
+      }
    }
 }
