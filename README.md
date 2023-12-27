@@ -5,4 +5,4 @@
 ## To do
 
 -  bfs
-  - the algorithm walk through
+   -  mark visited path as red
