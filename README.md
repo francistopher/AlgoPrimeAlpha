@@ -5,4 +5,5 @@
 ## To do
 
 -  bfs
-   -  mark visited path as red
+   -  fix bug where node's paths aren't found after reducing the number of
+   nodes
