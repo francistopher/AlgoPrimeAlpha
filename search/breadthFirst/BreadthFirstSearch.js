@@ -12,10 +12,7 @@ class BreadthFirstSearch extends Graph {
       // actual material used to search
       this.readyNodes;
       this.#setNodesAsReady();
-      // bfs
-      this.visited = [];
-      this.queue = [];
-      this.isSearching = false;
+      this.#reset();
    }
 
    #createSearchInstructions() {
@@ -90,9 +87,21 @@ class BreadthFirstSearch extends Graph {
       this.nodesCountSlider.disabled = true;
    }
 
+   #reset() {
+      // bfs
+      this.visited = [];
+      this.queue = [];
+      this.nodesCountSlider.disabled = false;
+      // clear search field
+      this.searchField.value = "";
+      this.readyNodes = [];
+   }
+
    #bfs() {
       // there is no more nodes to visit
-      if (this.queue.length === 0) {
+      if (this.queue.length == 0) {
+         this.#reset();
+         console.log("wow");
          return;
       }
       // get the visiting node
@@ -107,6 +116,9 @@ class BreadthFirstSearch extends Graph {
          setTimeout(() => {
             if (this.searchField.value === visitingNode.getElement().innerHTML) {
                visitingNode.getElement().style.borderColor = "green";
+               setTimeout(() => {
+                  this.#reset();
+               }, 1000);
                return;
             } else {
                visitingNode.getElement().style.borderColor = "red";
