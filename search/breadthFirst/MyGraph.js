@@ -388,6 +388,7 @@ class Graph {
             if (searchedNodePath === nodePath) {
                searchedNodePath.remove();
                this.paths.splice(j, 1);
+               j--;
             }
          }
       }

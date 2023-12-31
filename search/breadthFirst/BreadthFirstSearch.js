@@ -10,9 +10,13 @@ class BreadthFirstSearch extends Graph {
       this.#createTextField();
       this.#createSearchInstructions();
       // actual material used to search
-      this.readyNodes;
+      this.readyNodes = [];
       this.#setNodesAsReady();
+
       this.#reset();
+      this.nodesCountSlider.addEventListener("mouseup", () => {
+         this.#setNodesAsReady();
+      });
    }
 
    #createSearchInstructions() {
@@ -47,40 +51,38 @@ class BreadthFirstSearch extends Graph {
    }
 
    #setNodesAsReady() {
-      this.readyNodes = [];
-      this.nodesCountSlider.addEventListener("mouseup", () => {
-         // iterate through the ready nodes to see if it's left the scene
-         for (var i = 0; i < this.readyNodes.length; i++) {
-            const readyNode = this.readyNodes[i];
-            // ready node has left the scene
-            if (!this.nodes.includes(readyNode)) {
-               this.readyNodes.splice(i, 1);
-            }
+      // iterate through the ready nodes to see if it's left the scene
+      for (var i = 0; i < this.readyNodes.length; i++) {
+         const readyNode = this.readyNodes[i];
+         // ready node has left the scene
+         if (!this.nodes.includes(readyNode)) {
+            this.readyNodes.splice(i, 1);
+            i--;
          }
-         // iterate through the nodes to see if they hit up the scene
-         for (var j = 0; j < this.nodes.length; j++) {
-            const node = this.nodes[j];
-            // node has hit up the scene
-            if (!this.readyNodes.includes(node)) {
-               this.readyNodes.push(node);
-               // double click to start the bfs from the node
-               node.getElement().addEventListener("dblclick", () => {
-                  // is a number
-                  let value = this.searchField.value;
-                  value = value.replace(/[0-9]/g, "");
-                  // assures a number was entered
-                  if (value.length == 0 && this.searchField.value.length != 0) {
-                     this.#deactivateSlider();
-                     this.queue.push(node);
-                     this.#bfs();
-                  } else {
-                     this.searchInstructions.innerHTML =
-                        "ENTER A NUMBER ABOVE and double click on node to start search!";
-                  }
-               });
-            }
+      }
+      // iterate through the nodes to see if they hit up the scene
+      for (var j = 0; j < this.nodes.length; j++) {
+         const node = this.nodes[j];
+         // node has hit up the scene
+         if (!this.readyNodes.includes(node)) {
+            this.readyNodes.push(node);
+            // double click to start the bfs from the node
+            node.getElement().addEventListener("dblclick", () => {
+               // is a number
+               let value = this.searchField.value;
+               value = value.replace(/[0-9]/g, "");
+               // assures a number was entered
+               if (value.length == 0 && this.searchField.value.length != 0) {
+                  this.#deactivateSlider();
+                  this.queue.push(node);
+                  this.#bfs();
+               } else {
+                  this.searchInstructions.innerHTML =
+                     "ENTER A NUMBER ABOVE and double click on node to start search!";
+               }
+            });
          }
-      });
+      }
    }
 
    #deactivateSlider() {
@@ -94,7 +96,12 @@ class BreadthFirstSearch extends Graph {
       this.nodesCountSlider.disabled = false;
       // clear search field
       this.searchField.value = "";
-      this.readyNodes = [];
+      this.#setNodesAsReady();
+      setTimeout(() => {
+         for (let i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].getElement().style.borderColor = "black";
+         }
+      }, 3000);
    }
 
    #bfs() {
@@ -106,7 +113,6 @@ class BreadthFirstSearch extends Graph {
       }
       // get the visiting node
       const visitingNode = this.queue.shift();
-
       // if the visiting node has not been visited
       if (!this.visited.includes(visitingNode)) {
          visitingNode.getElement().style.borderColor = "yellow";
@@ -118,7 +124,7 @@ class BreadthFirstSearch extends Graph {
                visitingNode.getElement().style.borderColor = "green";
                setTimeout(() => {
                   this.#reset();
-               }, 1000);
+               }, 500);
                return;
             } else {
                visitingNode.getElement().style.borderColor = "red";
@@ -135,14 +141,22 @@ class BreadthFirstSearch extends Graph {
    #getNeighbors(node) {
       // get paths of node
       const nodePaths = this.allNodePaths.get(node);
-      // get each neighbor through path
-      for (var i = 0; i < nodePaths.length; i++) {
-         const path = nodePaths[i];
-         const pathNodes = this.allPathNodes.get(path);
-         if (pathNodes[0] !== node && !this.visited.includes(pathNodes[0])) {
-            this.queue.push(pathNodes[0]);
-         } else if (pathNodes[1] !== node && !this.visited.includes(pathNodes[1])) {
-            this.queue.push(pathNodes[1]);
+      if (nodePaths) {
+         // get each neighbor through path
+         for (var i = 0; i < nodePaths.length; i++) {
+            const path = nodePaths[i];
+            const pathNodes = this.allPathNodes.get(path);
+            if (pathNodes) {
+               if (pathNodes[0] && pathNodes[0] !== node && !this.visited.includes(pathNodes[0])) {
+                  this.queue.push(pathNodes[0]);
+               } else if (
+                  pathNodes[1] &&
+                  pathNodes[1] !== node &&
+                  !this.visited.includes(pathNodes[1])
+               ) {
+                  this.queue.push(pathNodes[1]);
+               }
+            }
          }
       }
    }
