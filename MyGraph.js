@@ -1,4 +1,4 @@
-class Graph {
+class MyGraph {
    constructor() {
       console.log("Hello World! This is Graph!");
       this.nodes = [];

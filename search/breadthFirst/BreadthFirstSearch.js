@@ -1,4 +1,4 @@
-class BreadthFirstSearch extends Graph {
+class BreadthFirstSearch extends MyGraph {
    constructor() {
       super();
       console.log("Hello, World! I am Breadth First Search!");
