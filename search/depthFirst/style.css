@@ -1,0 +1,15 @@
+.MyNode {
+   position: absolute;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   width: 5vh;
+   height: 5vh;
+   border: none;
+   border-style: solid;
+   border-color: black;
+   border-width: 0.5vh;
+   border-radius: 5vh;
+   z-index: 100;
+   background-color: white;
+}
